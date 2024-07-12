@@ -1,4 +1,4 @@
-# TOR SUPPORT IN LITECOIN
+# TOR SUPPORT IN CATCOIN
 
 It is possible to run Catcoin Core as a Tor onion service, and connect to such services.
 

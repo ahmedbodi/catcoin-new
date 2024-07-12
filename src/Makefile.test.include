@@ -1314,9 +1314,9 @@ nodist_test_test_litecoin_SOURCES = $(GENERATED_TEST_FILES)
 
 $(BITCOIN_TESTS): $(GENERATED_TEST_FILES)
 
-CLEAN_LITECOIN_TEST = test/*.gcda test/*.gcno test/fuzz/*.gcda test/fuzz/*.gcno test/util/*.gcda test/util/*.gcno $(GENERATED_TEST_FILES) $(BITCOIN_TESTS:=.log)
+CLEAN_CATCOIN_TEST = test/*.gcda test/*.gcno test/fuzz/*.gcda test/fuzz/*.gcno test/util/*.gcda test/util/*.gcno $(GENERATED_TEST_FILES) $(BITCOIN_TESTS:=.log)
 
-CLEANFILES += $(CLEAN_LITECOIN_TEST)
+CLEANFILES += $(CLEAN_CATCOIN_TEST)
 
 if TARGET_WINDOWS
 litecoin_test: $(TEST_BINARY)
@@ -1332,7 +1332,7 @@ litecoin_test_check: $(TEST_BINARY) FORCE
 	$(MAKE) check-TESTS TESTS=$^
 
 litecoin_test_clean : FORCE
-	rm -f $(CLEAN_LITECOIN_TEST) $(test_test_litecoin_OBJECTS) $(TEST_BINARY)
+	rm -f $(CLEAN_CATCOIN_TEST) $(test_test_litecoin_OBJECTS) $(TEST_BINARY)
 
 check-local: $(BITCOIN_TESTS:.cpp=.cpp.test)
 if BUILD_BITCOIN_TX
