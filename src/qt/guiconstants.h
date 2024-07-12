@@ -43,7 +43,7 @@ static const int TOOLTIP_WRAP_THRESHOLD = 80;
 #define SPINNER_FRAMES 36
 
 #define QAPP_ORG_NAME "Catcoin"
-#define QAPP_ORG_DOMAIN "litecoin.org"
+#define QAPP_ORG_DOMAIN "catcoin.org"
 #define QAPP_APP_NAME_DEFAULT "Catcoin-Qt"
 #define QAPP_APP_NAME_TESTNET "Liteocin-Qt-testnet"
 #define QAPP_APP_NAME_SIGNET "Catcoin-Qt-signet"

@@ -24,7 +24,7 @@ Developer Notes
     - [Threads](#threads)
     - [Ignoring IDE/editor files](#ignoring-ideeditor-files)
 - [Development guidelines](#development-guidelines)
-    - [General Catcoin Core](#general-litecoin-core)
+    - [General Catcoin Core](#general-catcoin-core)
     - [Wallet](#wallet)
     - [General C++](#general-c)
     - [C++ data structures](#c-data-structures)
@@ -261,7 +261,7 @@ to see it.
 
 ### Testnet and Regtest modes
 
-Run with the `-testnet` option to run with "play litecoins" on the test network, if you
+Run with the `-testnet` option to run with "play catcoins" on the test network, if you
 are testing multi-machine code that needs to operate across the internet.
 
 If you are testing something that can run on one machine, run with the `-regtest` option.
@@ -280,15 +280,15 @@ run-time checks to keep track of which locks are held and adds warnings to the
 
 Valgrind is a programming tool for memory debugging, memory leak detection, and
 profiling. The repo contains a Valgrind suppressions file
-([`valgrind.supp`](https://github.com/litecoin-project/litecoin/blob/master/contrib/valgrind.supp))
+([`valgrind.supp`](https://github.com/catcoin-project/catcoin/blob/master/contrib/valgrind.supp))
 which includes known Valgrind warnings in our dependencies that cannot be fixed
 in-tree. Example use:
 
 ```shell
-$ valgrind --suppressions=contrib/valgrind.supp src/test/test_litecoin
+$ valgrind --suppressions=contrib/valgrind.supp src/test/test_catcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
-      --show-leak-kinds=all src/test/test_litecoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/litecoind -printtoconsole
+      --show-leak-kinds=all src/test/test_catcoin --log_level=test_suite
+$ valgrind -v --leak-check=full src/catcoind -printtoconsole
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -305,7 +305,7 @@ To enable LCOV report generation during test runs:
 make
 make cov
 
-# A coverage report will now be accessible at `./test_litecoin.coverage/index.html`.
+# A coverage report will now be accessible at `./test_catcoin.coverage/index.html`.
 ```
 
 ### Performance profiling with perf
@@ -332,13 +332,13 @@ Make sure you [understand the security
 trade-offs](https://lwn.net/Articles/420403/) of setting these kernel
 parameters.
 
-To profile a running litecoind process for 60 seconds, you could use an
+To profile a running catcoind process for 60 seconds, you could use an
 invocation of `perf record` like this:
 
 ```sh
 $ perf record \
     -g --call-graph dwarf --per-thread -F 140 \
-    -p `pgrep litecoind` -- sleep 60
+    -p `pgrep catcoind` -- sleep 60
 ```
 
 You could then analyze the results by running:
@@ -979,7 +979,7 @@ In addition to reviewing the upstream changes in `env_posix.cc`, you can use `ls
 check this. For example, on Linux this command will show open `.ldb` file counts:
 
 ```bash
-$ lsof -p $(pidof litecoind) |\
+$ lsof -p $(pidof catcoind) |\
     awk 'BEGIN { fd=0; mem=0; } /ldb$/ { if ($4 == "mem") mem++; else fd++ } END { printf "mem = %s, fd = %s\n", mem, fd}'
 mem = 119, fd = 0
 ```
@@ -1117,7 +1117,7 @@ A few guidelines for introducing and reviewing new RPC interfaces:
 - Try not to overload methods on argument type. E.g. don't make `getblock(true)` and `getblock("hash")`
   do different things.
 
-  - *Rationale*: This is impossible to use with `litecoin-cli`, and can be surprising to users.
+  - *Rationale*: This is impossible to use with `catcoin-cli`, and can be surprising to users.
 
   - *Exception*: Some RPC calls can take both an `int` and `bool`, most notably when a bool was switched
     to a multi-value, or due to other historical reasons. **Always** have false map to 0 and
@@ -1136,7 +1136,7 @@ A few guidelines for introducing and reviewing new RPC interfaces:
 
 - Add every non-string RPC argument `(method, idx, name)` to the table `vRPCConvertParams` in `rpc/client.cpp`.
 
-  - *Rationale*: `litecoin-cli` and the GUI debug console use this table to determine how to
+  - *Rationale*: `catcoin-cli` and the GUI debug console use this table to determine how to
     convert a plaintext command line to JSON. If the types don't match, the method can be unusable
     from there.
 

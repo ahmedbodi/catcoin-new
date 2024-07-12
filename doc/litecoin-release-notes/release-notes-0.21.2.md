@@ -1,16 +1,16 @@
 Catcoin Core version 0.21.2 is now available from:
 
- <https://download.litecoin.org/litecoin-0.21.2/>.
+ <https://download.catcoin.org/catcoin-0.21.2/>.
 
 This is the largest update ever, providing full node, wallet, and mining support for MWEB.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/litecoin-project/litecoin/issues>
+  <https://github.com/catcoin-project/catcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://groups.google.com/forum/#!forum/litecoin-dev>
+  <https://groups.google.com/forum/#!forum/catcoin-dev>
 
 
 How to upgrade: 
@@ -21,7 +21,7 @@ Firstly, thank you for running Catcoin Core and helping secure the network!
 As you’re running an older version of Catcoin Core, shut it down. Wait until it’s completely shut down  - which might take a few minutes for older versions - then follow these simple steps:
 For Windows: simply run the installer 
 For Mac: copy over to `/Applications/Catcoin-Qt` 
-For Linux: copy cover `litecoind`/`litecoin-qt`.
+For Linux: copy cover `catcoind`/`catcoin-qt`.
 
 NB: upgrading directly from an ‘end of life’ version of Catcoin Core is possible, but it might take a while if the data directory needs to be migrated. Old wallet versions of Catcoin Core are generally supported.
  
@@ -44,9 +44,9 @@ Consensus changes
 -----------------
 
 - This release implements the proposed MWEB consensus rules
-  ([LIP002](https://github.com/litecoin-project/lips/blob/master/lip-0002.mediawiki),
-  [LIP003](https://github.com/litecoin-project/lips/blob/master/lip-0003.mediawiki), and
-  [LIP004](https://github.com/litecoin-project/lips/blob/master/lip-0004.mediawiki))
+  ([LIP002](https://github.com/catcoin-project/lips/blob/master/lip-0002.mediawiki),
+  [LIP003](https://github.com/catcoin-project/lips/blob/master/lip-0003.mediawiki), and
+  [LIP004](https://github.com/catcoin-project/lips/blob/master/lip-0004.mediawiki))
 
 P2P and network changes
 -----------------------

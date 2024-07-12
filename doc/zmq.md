@@ -6,7 +6,7 @@ providing various message-oriented semantics such as publish/subscribe,
 request/reply, and push/pull.
 
 The Catcoin Core daemon can be configured to act as a trusted "border
-router", implementing the litecoin wire protocol and relay, making
+router", implementing the catcoin wire protocol and relay, making
 consensus decisions, maintaining the local blockchain database,
 broadcasting locally generated transactions into the network, and
 providing a queryable RPC interface to interact on a polled basis for
@@ -48,7 +48,7 @@ operation.
 
 By default, the ZeroMQ feature is automatically compiled in if the
 necessary prerequisites are found.  To disable, use --disable-zmq
-during the *configure* step of building litecoind:
+during the *configure* step of building catcoind:
 
     $ ./configure --disable-zmq (other options)
 
@@ -82,9 +82,9 @@ The high water mark value must be an integer greater than or equal to 0.
 
 For instance:
 
-    $ litecoind -zmqpubhashtx=tcp://127.0.0.1:28332 \
+    $ catcoind -zmqpubhashtx=tcp://127.0.0.1:28332 \
                -zmqpubhashtx=tcp://192.168.1.2:28332 \
-               -zmqpubrawtx=ipc:///tmp/litecoind.tx.raw \
+               -zmqpubrawtx=ipc:///tmp/catcoind.tx.raw \
                -zmqpubhashtxhwm=10000
 
 Each PUB notification has a topic and body, where the header
@@ -101,7 +101,7 @@ is structured as the following based on the type of message:
 
 Where the 8-byte uints correspond to the mempool sequence number.
 
-These options can also be provided in litecoin.conf.
+These options can also be provided in catcoin.conf.
 
 ZeroMQ endpoint specifiers for TCP (and others) are documented in the
 [ZeroMQ API](http://api.zeromq.org/4-0:_start).
@@ -127,9 +127,9 @@ dropped by network middle boxes.
 
 ## Remarks
 
-From the perspective of litecoind, the ZeroMQ socket is write-only; PUB
+From the perspective of catcoind, the ZeroMQ socket is write-only; PUB
 sockets don't even have a read function. Thus, there is no state
-introduced into litecoind directly. Furthermore, no information is
+introduced into catcoind directly. Furthermore, no information is
 broadcast that wasn't already received from the public P2P network.
 
 No authentication or authorization is done on connecting clients; it

@@ -66,8 +66,8 @@ brew install berkeley-db4
 
 1. Clone the Catcoin Core source code:
     ```shell
-    git clone https://github.com/litecoin-project/litecoin
-    cd litecoin
+    git clone https://github.com/catcoin-project/catcoin
+    cd catcoin
     ```
 
 2.  Build Catcoin Core:
@@ -103,18 +103,18 @@ In this case there is no dependency on [*Berkeley DB*](#berkeley-db) and [*SQLit
 Mining is also possible in disable-wallet mode using the `getblocktemplate` RPC call.
 
 ## Running
-Catcoin Core is now available at `./src/litecoind`
+Catcoin Core is now available at `./src/catcoind`
 
 Before running, you may create an empty configuration file:
 ```shell
 mkdir -p "/Users/${USER}/Library/Application Support/Catcoin"
 
-touch "/Users/${USER}/Library/Application Support/Catcoin/litecoin.conf"
+touch "/Users/${USER}/Library/Application Support/Catcoin/catcoin.conf"
 
-chmod 600 "/Users/${USER}/Library/Application Support/Catcoin/litecoin.conf"
+chmod 600 "/Users/${USER}/Library/Application Support/Catcoin/catcoin.conf"
 ```
 
-The first time you run litecoind, it will start downloading the blockchain. This process could
+The first time you run catcoind, it will start downloading the blockchain. This process could
 take many hours, or even days on slower than average systems.
 
 You can monitor the download process by looking at the debug.log file:
@@ -124,9 +124,9 @@ tail -f $HOME/Library/Application\ Support/Catcoin/debug.log
 
 ## Other commands:
 ```shell
-./src/litecoind -daemon      # Starts the litecoin daemon.
-./src/litecoin-cli --help    # Outputs a list of command-line options.
-./src/litecoin-cli help      # Outputs a list of RPC commands when the daemon is running.
+./src/catcoind -daemon      # Starts the catcoin daemon.
+./src/catcoin-cli --help    # Outputs a list of command-line options.
+./src/catcoin-cli help      # Outputs a list of RPC commands when the daemon is running.
 ```
 
 ## Notes

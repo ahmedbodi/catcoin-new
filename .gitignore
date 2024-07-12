@@ -2,17 +2,17 @@
 
 *.exe
 *.pdb
-src/litecoin
-src/litecoind
-src/litecoin-cli
-src/litecoin-gui
-src/litecoin-node
-src/litecoin-tx
-src/litecoin-wallet
+src/catcoin
+src/catcoind
+src/catcoin-cli
+src/catcoin-gui
+src/catcoin-node
+src/catcoin-tx
+src/catcoin-wallet
 src/test/fuzz/*
 !src/test/fuzz/*.*
-src/test/test_litecoin
-src/qt/test/test_litecoin-qt
+src/test/test_catcoin
+src/qt/test/test_catcoin-qt
 
 # autoreconf
 Makefile.in
@@ -94,7 +94,7 @@ src/qt/bitcoin-qt.includes
 *.qm
 Makefile
 !depends/Makefile
-src/qt/litecoin-qt
+src/qt/catcoin-qt
 Catcoin-Qt.app
 background.tiff*
 
@@ -103,7 +103,7 @@ Makefile.am.user
 
 # Unit-tests
 Makefile.test
-litecoin-qt_test
+catcoin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -118,7 +118,7 @@ releases
 *.gcno
 *.gcda
 /*.info
-test_litecoin.coverage/
+test_catcoin.coverage/
 total.coverage/
 fuzz.coverage/
 coverage_percent.txt

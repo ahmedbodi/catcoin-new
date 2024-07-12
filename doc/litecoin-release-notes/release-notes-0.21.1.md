@@ -5,9 +5,9 @@ Summary:
 ==============
 In this update to Catcoin Core, Taproot has been activated, enhancing Catcoin’s security, privacy and scalability. Catcoin Core 0.21.1 is the most significant update in years - with performance improvements, new features (like Taproot), bug fixes and updated translations - and sets the foundations for MWEB’s imminent arrival. 
 
-Catcoin Core 0.21.1 is available now, right here: <https://download.litecoin.org/litecoin-0.21.1/>.
+Catcoin Core 0.21.1 is available now, right here: <https://download.catcoin.org/catcoin-0.21.1/>.
 
-As always, we welcome the expertise of the community. To report bugs please use the issue tracker at GitHub - <https://github.com/litecoin-project/litecoin/issues > - and to get security and update notifications subscribe via <https://groups.google.com/forum/#!forum/litecoin-dev>. 
+As always, we welcome the expertise of the community. To report bugs please use the issue tracker at GitHub - <https://github.com/catcoin-project/catcoin/issues > - and to get security and update notifications subscribe via <https://groups.google.com/forum/#!forum/catcoin-dev>. 
 
 Anyone can contribute to Catcoin Core. Please scroll down to ‘How to contribute to Catcoin Core’ for details.
 
@@ -22,7 +22,7 @@ Firstly, thank you for running Catcoin Core and helping secure the network!
 As you’re running an older version of Catcoin Core, shut it down. Wait until it’s completely shut down  - which might take a few minutes for older versions - then follow these simple steps:
 For Windows: simply run the installer 
 For Mac: copy over to `/Applications/Catcoin-Qt` 
-For Linux: copy cover `litecoind`/`litecoin-qt`.
+For Linux: copy cover `catcoind`/`catcoin-qt`.
 
 NB: upgrading directly from an ‘end of life’ version of Catcoin Core is possible, but it might take a while if the data directory needs to be migrated. Old wallet versions of Catcoin Core are generally supported.
  

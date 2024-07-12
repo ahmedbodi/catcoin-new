@@ -1,12 +1,12 @@
 Catcoin Core version 0.21.2.2 is now available from:
 
- <https://download.litecoin.org/litecoin-0.21.2.2/>.
+ <https://download.catcoin.org/catcoin-0.21.2.2/>.
 
 This is a new patch version release that includes important security updates.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/litecoin-project/litecoin/issues>
+  <https://github.com/catcoin-project/catcoin/issues>
 
 Notable changes
 ===============

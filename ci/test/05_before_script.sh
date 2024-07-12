@@ -10,7 +10,7 @@ export LC_ALL=C.UTF-8
 if [ "$CI_OS_NAME" == "macos" ]; then
   echo > $HOME/Library/Application\ Support/Catcoin
 else
-  DOCKER_EXEC echo \> \$HOME/.litecoin
+  DOCKER_EXEC echo \> \$HOME/.catcoin
 fi
 
 DOCKER_EXEC mkdir -p ${DEPENDS_DIR}/SDKs ${DEPENDS_DIR}/sdk-sources

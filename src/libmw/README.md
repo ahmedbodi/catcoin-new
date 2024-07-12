@@ -17,14 +17,14 @@ Header-only implementations of common caching algorithms.
 Repo: https://github.com/vpetrigo/caches/
 
 ### crypto/
-Crypto libraries not provided by litecoin or secp256k1-zkp.
+Crypto libraries not provided by catcoin or secp256k1-zkp.
 
 Currently, this just contains The reference implementation of blake2b.
 
 ### ghc/
 A header-only implementation of the C\+\+17 std::filesystem standard, but made compatible with C\+\+11 and C\+\+14.
 
-While boost\:\:filesystem is already pulled in by litecoin, I was uncomfortable with its API and its handling of unicode conversions.
+While boost\:\:filesystem is already pulled in by catcoin, I was uncomfortable with its API and its handling of unicode conversions.
 Someone more familiar with boost::filesystem should be able to eliminate the need for this dependency.
 
 ### secp256k1-zkp/
