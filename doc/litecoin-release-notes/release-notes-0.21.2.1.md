@@ -1,4 +1,4 @@
-Litecoin Core version 0.21.2.1 is now available from:
+Catcoin Core version 0.21.2.1 is now available from:
 
  <https://download.litecoin.org/litecoin-0.21.2.1/>.
 

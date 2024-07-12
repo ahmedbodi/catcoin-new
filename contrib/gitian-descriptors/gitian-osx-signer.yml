@@ -43,7 +43,7 @@ script: |
   cd ..
 
   UNSIGNED_TARBALL=litecoin-osx-unsigned.tar.gz
-  UNSIGNED_APP=dist/Litecoin-Qt.app
+  UNSIGNED_APP=dist/Catcoin-Qt.app
   SIGNED=litecoin-osx-signed.dmg
 
   tar -xf ${UNSIGNED_TARBALL}

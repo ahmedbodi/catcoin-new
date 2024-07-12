@@ -1,5 +1,5 @@
 # Linearize
-Construct a linear, no-fork, best version of the Litecoin blockchain.
+Construct a linear, no-fork, best version of the Catcoin blockchain.
 
 ## Step 1: Download hash list
 

@@ -1,4 +1,4 @@
-Litecoin Core version 0.21.2 is now available from:
+Catcoin Core version 0.21.2 is now available from:
 
  <https://download.litecoin.org/litecoin-0.21.2/>.
 
@@ -16,22 +16,22 @@ To receive security and update notifications, please subscribe to:
 How to upgrade: 
 ==============
 
-Firstly, thank you for running Litecoin Core and helping secure the network!
+Firstly, thank you for running Catcoin Core and helping secure the network!
 
-As you’re running an older version of Litecoin Core, shut it down. Wait until it’s completely shut down  - which might take a few minutes for older versions - then follow these simple steps:
+As you’re running an older version of Catcoin Core, shut it down. Wait until it’s completely shut down  - which might take a few minutes for older versions - then follow these simple steps:
 For Windows: simply run the installer 
-For Mac: copy over to `/Applications/Litecoin-Qt` 
+For Mac: copy over to `/Applications/Catcoin-Qt` 
 For Linux: copy cover `litecoind`/`litecoin-qt`.
 
-NB: upgrading directly from an ‘end of life’ version of Litecoin Core is possible, but it might take a while if the data directory needs to be migrated. Old wallet versions of Litecoin Core are generally supported.
+NB: upgrading directly from an ‘end of life’ version of Catcoin Core is possible, but it might take a while if the data directory needs to be migrated. Old wallet versions of Catcoin Core are generally supported.
  
 
 Compatibility:
 ==============
 
-Litecoin Core is supported and extensively tested on operating systems using the Linux kernel, macOS 10.10+,  Windows 7 and newer. It’s not recommended to use Litecoin Core on unsupported systems.
+Catcoin Core is supported and extensively tested on operating systems using the Linux kernel, macOS 10.10+,  Windows 7 and newer. It’s not recommended to use Catcoin Core on unsupported systems.
 
-Litecoin Core should also work on most other Unix-like systems, but is not as frequently tested on them.
+Catcoin Core should also work on most other Unix-like systems, but is not as frequently tested on them.
 
 MWEB fields added to BlockIndex, and block serialization format has changed. Downgrading to older versions is unsafe.
 

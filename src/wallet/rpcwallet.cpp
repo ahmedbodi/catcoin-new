@@ -254,7 +254,7 @@ static void SetFeeEstimateMode(const CWallet& wallet, CCoinControl& cc, const Un
 static RPCHelpMan getnewaddress()
 {
     return RPCHelpMan{"getnewaddress",
-                "\nReturns a new Litecoin address for receiving payments.\n"
+                "\nReturns a new Catcoin address for receiving payments.\n"
                 "If 'label' is specified, it is added to the address book \n"
                 "so payments received with the address will be associated with 'label'.\n",
                 {
@@ -312,7 +312,7 @@ static RPCHelpMan getnewaddress()
 static RPCHelpMan getrawchangeaddress()
 {
     return RPCHelpMan{"getrawchangeaddress",
-                "\nReturns a new Litecoin address, for receiving change.\n"
+                "\nReturns a new Catcoin address, for receiving change.\n"
                 "This is for use with raw transactions, NOT normal use.\n",
                 {
                     {"address_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
@@ -381,7 +381,7 @@ static RPCHelpMan setlabel()
 
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Litecoin address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Catcoin address");
     }
 
     std::string label = LabelFromValue(request.params[1]);
@@ -403,7 +403,7 @@ void ParseRecipients(const UniValue& address_amounts, const UniValue& subtract_f
     for (const std::string& address: address_amounts.getKeys()) {
         CTxDestination dest = DecodeDestination(address);
         if (!IsValidDestination(dest)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Litecoin address: ") + address);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Catcoin address: ") + address);
         }
 
         if (destinations.count(dest)) {
@@ -694,7 +694,7 @@ static CAmount GetReceived(const CWallet& wallet, const UniValue& params, bool b
         // Get the address
         CTxDestination dest = DecodeDestination(params[0].get_str());
         if (!IsValidDestination(dest)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Litecoin address");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Catcoin address");
         }
         if (!wallet.IsMine(dest)) {
             throw JSONRPCError(RPC_WALLET_ERROR, "Address not found in wallet");
@@ -985,7 +985,7 @@ static RPCHelpMan addmultisigaddress()
 {
     return RPCHelpMan{"addmultisigaddress",
                 "\nAdd an nrequired-to-sign multisignature address to the wallet. Requires a new wallet backup.\n"
-                "Each key is a Litecoin address or hex-encoded public key.\n"
+                "Each key is a Catcoin address or hex-encoded public key.\n"
                 "This functionality is only intended for use with non-watchonly addresses.\n"
                 "See `importaddress` for watchonly p2sh address support.\n"
                 "If 'label' is specified, assign address to that label.\n",
@@ -3091,7 +3091,7 @@ static RPCHelpMan listunspent()
             const UniValue& input = inputs[idx];
             CTxDestination dest = DecodeDestination(input.get_str());
             if (!IsValidDestination(dest)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Litecoin address: ") + input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Catcoin address: ") + input.get_str());
             }
             if (!destinations.insert(dest).second) {
                 throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ") + input.get_str());

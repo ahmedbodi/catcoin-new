@@ -27,10 +27,10 @@
 #define COPYRIGHT_HOLDERS "The %s developers"
 
 /* Copyright holder(s) */
-#define COPYRIGHT_HOLDERS_FINAL "The Litecoin Core developers"
+#define COPYRIGHT_HOLDERS_FINAL "The Catcoin Core developers"
 
 /* Replacement for %s in copyright holders string */
-#define COPYRIGHT_HOLDERS_SUBSTITUTION "Litecoin Core"
+#define COPYRIGHT_HOLDERS_SUBSTITUTION "Catcoin Core"
 
 /* Copyright year */
 #define COPYRIGHT_YEAR 2024
@@ -250,10 +250,10 @@
 #define PACKAGE_BUGREPORT "https://github.com/litecoin-project/litecoin/issues"
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "Litecoin Core"
+#define PACKAGE_NAME "Catcoin Core"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Litecoin Core 0.21.3"
+#define PACKAGE_STRING "Catcoin Core 0.21.3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "litecoin"

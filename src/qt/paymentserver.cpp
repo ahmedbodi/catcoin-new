@@ -47,7 +47,7 @@ const QString BITCOIN_IPC_PREFIX("litecoin:");
 //
 static QString ipcServerName()
 {
-    QString name("LitecoinQt");
+    QString name("CatcoinQt");
 
     // Append a simple hash of the datadir
     // Note that GetDataDir(true) returns a different path
@@ -249,7 +249,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             }
             else
                 Q_EMIT message(tr("URI handling"),
-                    tr("URI cannot be parsed! This can be caused by an invalid Litecoin address or malformed URI parameters."),
+                    tr("URI cannot be parsed! This can be caused by an invalid Catcoin address or malformed URI parameters."),
                     CClientUIInterface::ICON_WARNING);
 
             return;

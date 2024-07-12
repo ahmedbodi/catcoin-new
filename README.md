@@ -1,26 +1,26 @@
-Litecoin Core integration/staging tree
+Catcoin Core integration/staging tree
 =====================================
 
 [![Build Status](https://travis-ci.org/litecoin-project/litecoin.svg?branch=master)](https://travis-ci.org/litecoin-project/litecoin)
 
 https://litecoin.org
 
-What is Litecoin?
+What is Catcoin?
 ----------------
 
-Litecoin is an experimental digital currency that enables instant payments to
-anyone, anywhere in the world. Litecoin uses peer-to-peer technology to operate
+Catcoin is an experimental digital currency that enables instant payments to
+anyone, anywhere in the world. Catcoin uses peer-to-peer technology to operate
 with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Litecoin Core is the name of open source
+out collectively by the network. Catcoin Core is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Litecoin Core software, see [https://litecoin.org](https://litecoin.org).
+the Catcoin Core software, see [https://litecoin.org](https://litecoin.org).
 
 License
 -------
 
-Litecoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+Catcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
@@ -28,7 +28,7 @@ Development Process
 
 The `master` branch is regularly built (see `doc/build-*.md` for instructions) and tested, but it is not guaranteed to be
 completely stable. [Tags](https://github.com/litecoin-project/litecoin/tags) are created
-regularly from release branches to indicate new official, stable release versions of Litecoin Core.
+regularly from release branches to indicate new official, stable release versions of Catcoin Core.
 
 The https://github.com/litecoin-project/gui repository is used exclusively for the
 development of the GUI. Its master branch is identical in all monotree
@@ -76,7 +76,7 @@ Translations
 ------------
 
 We only accept translation fixes that are submitted through [Bitcoin Core's Transifex page](https://www.transifex.com/projects/p/bitcoin/).
-Translations are converted to Litecoin periodically.
+Translations are converted to Catcoin periodically.
 
 Translations are periodically pulled from Transifex and merged into the git repository. See the
 [translation process](doc/translation_process.md) for details on how this works.
