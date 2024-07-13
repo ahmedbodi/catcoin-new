@@ -8,36 +8,205 @@
 #include <arith_uint256.h>
 #include <bignum.h>
 #include <chain.h>
+#include <logging.h>
 #include <primitives/block.h>
 #include <uint256.h>
 
-
-static const int64_t nTargetTimespan = 6 * 60 * 60; // 6 hours
-static const int64_t nTargetSpacing = 10 * 60;      // 10 minute block time target
-static const int64_t nInterval = nTargetTimespan / nTargetSpacing;
-
-static const int64_t nTargetTimespanOld = 14 * 24 * 60 * 60; // two weeks
-static const int64_t nIntervalOld = nTargetTimespanOld / nTargetSpacing;
-static const int fork4Block = 46331;
-static int fork3Block = 27260; // FIXME move to top...
-
-unsigned int GetNextWorkRequired_PID(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+unsigned int GetNextWorkRequired_CIP01(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
-    unsigned int i;
-
-    int64_t nTargetTimespanLocal = 0;
-    int64_t nIntervalLocal = 0;
-    int forkBlock = 20290 - 1;
-    int fork2Block = 21346;
-
-
-    // moved variable inits to the top where they belong
-    static CBigNum bnProofOfWorkLimit(params.powLimit);
+    assert(pindexLast != nullptr);
     unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
+
+    // Only change once per difficulty adjustment interval
+    if ((pindexLast->nHeight + 1) % params.DifficultyAdjustmentIntervalV1() != 0) {
+        if (params.fPowAllowMinDifficultyBlocks) {
+            // Special difficulty rule for testnet:
+            // If the new block's timestamp is more than 2* 10 minutes
+            // then allow mining of a min-difficulty block.
+            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2)
+                return nProofOfWorkLimit;
+            else {
+                // Return the last non-special-min-difficulty-rules-block
+                const CBlockIndex* pindex = pindexLast;
+                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentIntervalV1() != 0 && pindex->nBits == nProofOfWorkLimit)
+                    pindex = pindex->pprev;
+                return pindex->nBits;
+            }
+        }
+        return pindexLast->nBits;
+    }
+
+    // Go back by what we want to be 14 days worth of blocks
+    // Litecoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
+    int blockstogoback = params.DifficultyAdjustmentIntervalV1() - 1;
+    if ((pindexLast->nHeight + 1) != params.DifficultyAdjustmentIntervalV1())
+        blockstogoback = params.DifficultyAdjustmentIntervalV1();
+
+    // Go back by what we want to be 14 days worth of blocks
+    const CBlockIndex* pindexFirst = pindexLast;
+    for (int i = 0; pindexFirst && i < blockstogoback; i++)
+        pindexFirst = pindexFirst->pprev;
+
+    assert(pindexFirst);
+
+    if (params.fPowNoRetargeting)
+        return pindexLast->nBits;
+
+    // Limit adjustment step
+    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    if (nActualTimespan < params.nPowTargetTimespanV1 / 4)
+        nActualTimespan = params.nPowTargetTimespanV1 / 4;
+    if (nActualTimespan > params.nPowTargetTimespanV1 * 4)
+        nActualTimespan = params.nPowTargetTimespanV1 * 4;
+
+    // Retarget
+    arith_uint256 bnNew;
+    arith_uint256 bnOld;
+    bnNew.SetCompact(pindexLast->nBits);
+    bnOld = bnNew;
+    // Litecoin: intermediate uint256 can overflow by 1 bit
+    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
+    bool fShift = bnNew.bits() > bnPowLimit.bits() - 1;
+    if (fShift)
+        bnNew >>= 1;
+    bnNew *= nActualTimespan;
+    bnNew /= params.nPowTargetTimespanV1;
+    if (fShift)
+        bnNew <<= 1;
+
+    if (bnNew > bnPowLimit)
+        bnNew = bnPowLimit;
+
+    return bnNew.GetCompact();
+}
+
+unsigned int GetNextWorkRequired_CIP02(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    assert(pindexLast != nullptr);
+    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
+
+    // Only change once per difficulty adjustment interval
+    if ((pindexLast->nHeight + 1) % params.DifficultyAdjustmentIntervalV2() != 0) {
+        if (params.fPowAllowMinDifficultyBlocks) {
+            // Special difficulty rule for testnet:
+            // If the new block's timestamp is more than 2* 10 minutes
+            // then allow mining of a min-difficulty block.
+            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2)
+                return nProofOfWorkLimit;
+            else {
+                // Return the last non-special-min-difficulty-rules-block
+                const CBlockIndex* pindex = pindexLast;
+                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentIntervalV2() != 0 && pindex->nBits == nProofOfWorkLimit)
+                    pindex = pindex->pprev;
+                return pindex->nBits;
+            }
+        }
+        return pindexLast->nBits;
+    }
+
+    // Go back by what we want to be 14 days worth of blocks
+    // Litecoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
+    int blockstogoback = params.DifficultyAdjustmentIntervalV2() - 1;
+    if ((pindexLast->nHeight + 1) != params.DifficultyAdjustmentIntervalV2())
+        blockstogoback = params.DifficultyAdjustmentIntervalV2();
+
+    // Go back by what we want to be 14 days worth of blocks
+    const CBlockIndex* pindexFirst = pindexLast;
+    for (int i = 0; pindexFirst && i < blockstogoback; i++)
+        pindexFirst = pindexFirst->pprev;
+
+    assert(pindexFirst);
+
+    if (params.fPowNoRetargeting)
+        return pindexLast->nBits;
+
+    // Limit adjustment step
+    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    if (nActualTimespan < params.nPowTargetTimespanV2 / 4)
+        nActualTimespan = params.nPowTargetTimespanV2 / 4;
+    if (nActualTimespan > params.nPowTargetTimespanV2 * 4)
+        nActualTimespan = params.nPowTargetTimespanV2 * 4;
+
+    // Retarget
+    arith_uint256 bnNew;
+    arith_uint256 bnOld;
+    bnNew.SetCompact(pindexLast->nBits);
+    bnOld = bnNew;
+    // Litecoin: intermediate uint256 can overflow by 1 bit
+    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
+    bool fShift = bnNew.bits() > bnPowLimit.bits() - 1;
+    if (fShift)
+        bnNew >>= 1;
+    bnNew *= nActualTimespan;
+    bnNew /= params.nPowTargetTimespanV2;
+    if (fShift)
+        bnNew <<= 1;
+
+    if (bnNew > bnPowLimit)
+        bnNew = bnPowLimit;
+
+    return bnNew.GetCompact();
+}
+
+unsigned int GetNextWorkRequired_CIP03(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    assert(pindexLast != nullptr);
+
+    // Catcoin: This fixes an issue where a 51% attack can change difficulty at will.
+    // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
+    int blockstogoback = params.DifficultyAdjustmentIntervalV2();
+    if ((pindexLast->nHeight + 1) != params.DifficultyAdjustmentIntervalV2())
+        blockstogoback = params.DifficultyAdjustmentIntervalV2();
+
+    // Go back by what we want to be 14 days worth of blocks
+    const CBlockIndex* pindexFirst = pindexLast;
+    for (int i = 0; pindexFirst && i < blockstogoback; i++)
+        pindexFirst = pindexFirst->pprev;
+
+    assert(pindexFirst);
+
+    if (params.fPowNoRetargeting)
+        return pindexLast->nBits;
+
+    // Limit adjustment step
+    int numerator = 112;
+    int denominator = 100;
+    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    int64_t lowLimit = params.nPowTargetTimespanV2 * denominator / numerator;
+    int64_t highLimit = params.nPowTargetTimespanV2 * numerator / denominator;
+    if (nActualTimespan < lowLimit)
+        nActualTimespan = lowLimit;
+    if (nActualTimespan > highLimit)
+        nActualTimespan = highLimit;
+
+    // Retarget
+    arith_uint256 bnNew;
+    arith_uint256 bnOld;
+    bnNew.SetCompact(pindexLast->nBits);
+    bnOld = bnNew;
+    // Litecoin: intermediate uint256 can overflow by 1 bit
+    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
+    bool fShift = bnNew.bits() > bnPowLimit.bits() - 1;
+    if (fShift)
+        bnNew >>= 1;
+    bnNew *= nActualTimespan;
+    bnNew /= params.nPowTargetTimespanV2;
+    if (fShift)
+        bnNew <<= 1;
+
+    if (bnNew > bnPowLimit)
+        bnNew = bnPowLimit;
+
+    return bnNew.GetCompact();
+}
+
+unsigned int GetNextWorkRequired_CIP04(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    assert(pindexLast != nullptr);
+
     int64_t nActualTimespan;
-    int64_t lowLimit;
-    int64_t highLimit;
-    unsigned int blockstogoback = nIntervalLocal; // was -1
     CBigNum bnNew;
     const CBlockIndex* pindexFirst = pindexLast;
 
@@ -57,203 +226,89 @@ unsigned int GetNextWorkRequired_PID(const CBlockIndex* pindexLast, const CBlock
     int64_t result;
     CBigNum bResult;
 
-    // Genesis block
-    if (pindexLast == NULL)
-        return nProofOfWorkLimit;
+    pindexFirst = pindexLast->pprev;
+    for (int i = 0; i < 7; i++)
+        pindexFirst = pindexFirst->pprev;
+    nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
+    nActualTimespan = nActualTimespan / 8;
 
-    // Starting from block 20,290 the network diff was set to 16
-    // and the retarget interval was changed to 36
-    if (pindexLast->nHeight < forkBlock) {
-        nTargetTimespanLocal = nTargetTimespanOld;
-        nIntervalLocal = nIntervalOld;
-    } else if (pindexLast->nHeight == forkBlock) {
-        bnNew.SetCompact(0x1c0ffff0); // Difficulty 16
+    bnNew.SetCompact(pindexLast->nBits);
+    int i = 0;
+    while (bnNew > 0)
+    {
+        i++;
+        bnNew = bnNew >> 1;
+        if (i > 256)
+            bnNew = 0;
+    }
+    bnNew.SetCompact(pindexLast->nBits);
+
+
+    error = nActualTimespan - params.nPowTargetSpacing;
+    if (error >= -450 && error <= 450)
+    {
+        pCalc = pGainUp * (double)error;
+        iCalc = iGainUp * (double)error * (double)((double)params.nPowTargetSpacing / (double)nActualTimespan);
+        dCalc = dGainUp * ((double)error / (double)nActualTimespan) * iCalc;
+    }
+    else
+    {
+        pCalc = pGainDn * (double)error;
+        iCalc = iGainDn * (double)error * (double)((double)params.nPowTargetSpacing / (double)nActualTimespan);
+        dCalc = dGainDn * ((double)error / (double)nActualTimespan) * iCalc;
+    }
+
+    if (error > -10 && error < 10) {
         return bnNew.GetCompact();
-    } else // Keep in for a resync
-    {
-        nTargetTimespanLocal = nTargetTimespan;
-        nIntervalLocal = nInterval;
     }
 
-    // after fork2Block we retarget every block
-    if (pindexLast->nHeight < fork2Block) {
-        // Only change once per interval
-        if ((pindexLast->nHeight + 1) % nIntervalLocal != 0) {
-            // Special difficulty rule for testnet:
-            //            if (fTestNet)
-            //            {
-            //                // If the new block's timestamp is more than 2* 10 minutes
-            //                // then allow mining of a min-difficulty block.
-            //                if (pblock->nTime > pindexLast->nTime + nTargetSpacing*2)
-            //                    return nProofOfWorkLimit;
-            //                else
-            //                {
-            //                    // Return the last non-special-min-difficulty-rules-block
-            //                    const CBlockIndex* pindex = pindexLast;
-            //                    while (pindex->pprev && pindex->nHeight % nIntervalLocal != 0 && pindex->nBits == nProofOfWorkLimit)
-            //                        pindex = pindex->pprev;
-            //                    return pindex->nBits;
-            //                }
-            //            }
+    dResult = pCalc + iCalc + dCalc;
 
-            return pindexLast->nBits;
-        }
-    }
+    result = (int64_t)(dResult * 65536);
+    while (result > 8388607)
+        result = result / 2;
+    bResult = result; 
+    if (i > 24)
+        bResult = bResult << (i - 24);
+    bnNew = bnNew - bResult;
 
-
-    if (pindexLast->nHeight < fork3Block) // let it walk through 2nd fork stuff if below fork3Block, and ignore if on testnet
-    {
-        // Catcoin: This fixes an issue where a 51% attack can change difficulty at will.
-        // Go back the full period unless it's the first retarget after genesis. Code courtesy of Art Forz
-        if ((pindexLast->nHeight + 1) != nIntervalLocal)
-            blockstogoback = nIntervalLocal;
-
-        // Go back by what we want to be 14 days worth of blocks
-        printf("Blocks to go back: %d\n", blockstogoback);
-        if (blockstogoback > 0) {
-            for (i = 0; pindexFirst && i < blockstogoback; i++)
-                pindexFirst = pindexFirst->pprev;
-            assert(pindexFirst);
-        }
-
-        // Limit adjustment step
-        int numerator = 4;
-        int denominator = 1;
-        if (pindexLast->nHeight >= fork2Block) {
-            numerator = 112;
-            denominator = 100;
-        }
-        nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
-        lowLimit = nTargetTimespanLocal * denominator / numerator;
-        highLimit = nTargetTimespanLocal * numerator / denominator;
-        if (nActualTimespan < lowLimit)
-            nActualTimespan = lowLimit;
-        if (nActualTimespan > highLimit)
-            nActualTimespan = highLimit;
-
-        // Retarget
-        bnNew.SetCompact(pindexLast->nBits);
-        bnNew *= nActualTimespan;
-        bnNew /= nTargetTimespanLocal;
-
-        if (bnNew > bnProofOfWorkLimit)
-            bnNew = bnProofOfWorkLimit;
-    }
-    /*
-    PID formula
-    Error = Actual Time - Desired time
-    P Calc = pGain * Error
-    I Calc = iGain * Error * (Desired Time / Actual Time)
-    D Calc = dGain * (Error / Actual Time) * I Calc
-
-    New Diff = (Current Diff + P Calc + I Calc + D Calc)
-
-    If New diff < 0, then set static value of 0.0001 or so.
-    */
-
-    if (pindexLast->nHeight >= fork3Block)
-    // Fork 3 to use a PID routine instead of the other 2 forks
-    {
-        pindexFirst = pindexLast->pprev; // Set previous block
-        for (i = 0; i < 7; i++)
-            pindexFirst = pindexFirst->pprev;                                       // Set 4th previous block for 8 block filtering
-        nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime(); // Get last X blocks time
-        nActualTimespan = nActualTimespan / 8;                                      // Calculate average for last 8 blocks
-                                                                                    //		if(pindexLast->nHeight > fork4Block || fTestNet){
-                                                                                    //			if (nMinSpacing > nActualTimespan){
-                                                                                    //				printf("WARNING: SANITY CHECK FAILED: PID nActualTimespan %"PRI64d" too small! increased to %"PRI64d"\n",
-                                                                                    //					nActualTimespan, nMinSpacing );
-                                                                                    //				nActualTimespan = nMinSpacing;
-                                                                                    //			}
-                                                                                    //		}
-        bnNew.SetCompact(pindexLast->nBits);                                        // Get current difficulty
-        i = 0;                                                                      // Zero bit-shift counter
-        while (bnNew > 0)                                                           // Loop while bnNew > 0
-        {
-            i++;                    // Increment bit-shift counter
-            bnNew = bnNew >> 1;     // shift bnNew lower by 1 bit
-            if (i > 256) bnNew = 0; // overflow test, just to make sure that it never stays in this loop
-        }
-        bnNew.SetCompact(pindexLast->nBits); // Get current difficulty again
-
-
-        error = nActualTimespan - nTargetSpacing; // Calculate the error to be fed into the PID Calculation
-        if (error >= -450 && error <= 450)        // Slower gains for when the average time is within 2.5 min and 7.5 min
-        {
-            // Calculate P ... pGainUp defined at beginning of routine
-            pCalc = pGainUp * (double)error;
-            // Calculate I ... iGainUp defined at beginning of routine
-            iCalc = iGainUp * (double)error * (double)((double)nTargetSpacing / (double)nActualTimespan);
-            // Calculate D ... dGainUp defined at beginning of routine
-            dCalc = dGainUp * ((double)error / (double)nActualTimespan) * iCalc;
-        } else // Faster gains for block averages faster than 2.5 min and greater than 7.5 min
-        {
-            // Calculate P ... pGainDn defined at beginning of routine
-            pCalc = pGainDn * (double)error;
-            // Calculate I ... iGainDn defined at beginning of routine
-            iCalc = iGainDn * (double)error * (double)((double)nTargetSpacing / (double)nActualTimespan);
-            // Calculate D ... dGainDn defined at beginning of routine
-            dCalc = dGainDn * ((double)error / (double)nActualTimespan) * iCalc;
-        }
-
-        if (error > -10 && error < 10) {
-            return (bnNew.GetCompact());
-        }
-
-        dResult = pCalc + iCalc + dCalc; // Sum the PID calculations
-
-        result = (int64_t)(dResult * 65536); // Adjust for scrypt calcuation
-        // Bring the result within max range to avoid overflow condition
-        while (result > 8388607)
-            result = result / 2;
-        bResult = result;                          // Set the bignum value
-        if (i > 24) bResult = bResult << (i - 24); // bit-shift integer value of result to be subtracted from current diff
-        bnNew = bnNew - bResult; // Subtract the result to set the current diff
-
-        // Make sure that diff is not set too low, ever
-        if (bnNew.GetCompact() > 0x1e0fffff) bnNew.SetCompact(0x1e0fffff);
-
-    } // End Fork 3 to use a PID routine instead of the other 2 forks routine
+    if (bnNew.GetCompact() > 0x1e0fffff)
+        bnNew.SetCompact(0x1e0fffff);
 
     return bnNew.GetCompact();
 }
 
-unsigned int GetNextWorkRequired_DIGI(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+unsigned int GetNextWorkRequired_CIP05(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
-    // Digi algorithm should never be used until at least 2 blocks are mined.
-    // Contains code by RealSolid & WDC
-    // Cleaned up for use in Guldencoin by GeertJohan (dead code removal since Guldencoin retargets every block)
-    // retarget timespan is set to a single block spacing because there is a retarget every block
-    int64_t retargetTimespan = nTargetSpacing;
+    static CBigNum bnProofOfWorkLimit(params.powLimit);
 
-    // get previous block
-    const CBlockIndex* pindexPrev = pindexLast->pprev;
-    assert(pindexPrev);
+    int64_t timestamp = (pindexLast->GetBlockTime() % 60); // Get the seconds portion of the last block
+    if ((timestamp >= 0 && timestamp <= 14) || (timestamp >= 30 && timestamp <= 44)) {
+        const CBlockIndex* pindexPrev = pindexLast->pprev;
+        assert(pindexPrev);
+        int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexPrev->GetBlockTime();
 
-    // calculate actual timestpan between last block and previous block
-    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexPrev->GetBlockTime();
+        // limit difficulty changes between 50% and 125% (human view)
+        if (nActualTimespan < (params.nPowTargetSpacing - (params.nPowTargetSpacing/4)) ) nActualTimespan = (params.nPowTargetSpacing - (params.nPowTargetSpacing/4));
+        if (nActualTimespan > (params.nPowTargetSpacing + (params.nPowTargetSpacing/2)) ) nActualTimespan = (params.nPowTargetSpacing + (params.nPowTargetSpacing/2));
 
-    // limit difficulty changes between 50% and 125% (human view)
-    if (nActualTimespan < (retargetTimespan - (retargetTimespan / 4))) nActualTimespan = (retargetTimespan - (retargetTimespan / 4));
-    if (nActualTimespan > (retargetTimespan + (retargetTimespan / 2))) nActualTimespan = (retargetTimespan + (retargetTimespan / 2));
+        // calculate new difficulty
+        CBigNum bnNew;
+        bnNew.SetCompact(pindexLast->nBits);
+        bnNew *= nActualTimespan;
+        bnNew /= params.nPowTargetSpacing;
 
-    // Retarget
-    arith_uint256 bnNew;
-    bnNew.SetCompact(pindexLast->nBits);
-    // Catcoin: intermediate uint256 can overflow by 1 bit
-    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
-    bool fShift = bnNew.bits() > bnPowLimit.bits() - 1;
-    if (fShift)
-        bnNew >>= 1;
-    bnNew *= nActualTimespan;
-    bnNew /= retargetTimespan;
-    if (fShift)
-        bnNew <<= 1;
+        // difficulty should never go below (human view) the starting difficulty
+        if (bnNew > bnProofOfWorkLimit)
+            bnNew = bnProofOfWorkLimit;
 
-    if (bnNew > bnPowLimit)
-        bnNew = bnPowLimit;
+	    // Make sure that diff is not set too low, ever ... Might find a min diff higher than 0.000228882 (or 15 on cgminer's output)
+	    if (bnNew.GetCompact() > 0x1e0fffff)
+            bnNew.SetCompact(0x1e0fffff);
+        return bnNew.GetCompact();
+    }
 
-    return bnNew.GetCompact();
+    return GetNextWorkRequired_CIP04(pindexLast, pblock, params);
 }
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
@@ -268,59 +323,25 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
 
-    int DiffMode = 1;
-    int64_t timestamp = (pindexLast->GetBlockTime() % 60); // Get the seconds portion of the last block
+    if (pindexLast->nHeight < params.CIP01Height)
+        return GetNextWorkRequired_CIP01(pindexLast, pblock, params);
 
-    if (pindexLast->nHeight >= fork4Block || params.fPowAllowMinDifficultyBlocks) {
-        if ((timestamp >= 0 && timestamp <= 14) || (timestamp >= 30 && timestamp <= 44)) {
-            DiffMode = 0;
-        }
-    } else {
-        DiffMode = 1; // Old algo
+    if (pindexLast->nHeight == params.CIP01Height) {
+        CBigNum bnNew;
+        bnNew.SetCompact(0x1c0ffff0); // Difficulty 16
+        return bnNew.GetCompact();
     }
 
-    if (DiffMode == 0) {
-        return GetNextWorkRequired_DIGI(pindexLast, pblock, params);
-    } // DigiShield algo
-    if (DiffMode == 1) {
-        return GetNextWorkRequired_PID(pindexLast, pblock, params);
-    } // PID Algo
+    if (pindexLast->nHeight < params.CIP02Height)
+        return GetNextWorkRequired_CIP02(pindexLast, pblock, params);
 
-    // It should never get to this next line, but force PID algo, just in case it does.
-    return GetNextWorkRequired_PID(pindexLast, pblock, params);
-}
+    if (pindexLast->nHeight < params.CIP03Height)
+        return GetNextWorkRequired_CIP03(pindexLast, pblock, params);
 
-unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
-{
-    if (params.fPowNoRetargeting)
-        return pindexLast->nBits;
+    if (pindexLast->nHeight < params.CIP04Height)
+        return GetNextWorkRequired_CIP04(pindexLast, pblock, params);
 
-    // Limit adjustment step
-    int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
-    if (nActualTimespan < params.nPowTargetTimespan / 4)
-        nActualTimespan = params.nPowTargetTimespan / 4;
-    if (nActualTimespan > params.nPowTargetTimespan * 4)
-        nActualTimespan = params.nPowTargetTimespan * 4;
-
-    // Retarget
-    arith_uint256 bnNew;
-    arith_uint256 bnOld;
-    bnNew.SetCompact(pindexLast->nBits);
-    bnOld = bnNew;
-    // Catcoin: intermediate uint256 can overflow by 1 bit
-    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
-    bool fShift = bnNew.bits() > bnPowLimit.bits() - 1;
-    if (fShift)
-        bnNew >>= 1;
-    bnNew *= nActualTimespan;
-    bnNew /= params.nPowTargetTimespan;
-    if (fShift)
-        bnNew <<= 1;
-
-    if (bnNew > bnPowLimit)
-        bnNew = bnPowLimit;
-
-    return bnNew.GetCompact();
+    return GetNextWorkRequired_CIP05(pindexLast, pblock, params);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)

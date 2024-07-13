@@ -74,6 +74,10 @@ struct Params {
     /** Don't warn about unknown BIP 9 activations below this height.
      * This prevents us from warning about the CSV and segwit activations. */
     int MinBIP9WarningHeight;
+    int CIP01Height; // Catcoin Improvement Proposal 01 - Change Retarget Interval to 36 blocks
+    int CIP02Height; // Catcoin Improvement Proposal 02 - Change Retarget Interval to every block
+    int CIP03Height; // Catcoin Improvement Proposal 03 - Change back to 36 Block Retarget Interval with different params
+    int CIP04Height; // Catcoin Improvement Proposal 04 - Switch to Dynamically changing Retargetting Algorithm (PIDv1 + DigiShield)
     /**
      * Minimum blocks including miner confirmation of the total of 2016 blocks in a retargeting period,
      * (nPowTargetTimespan / nPowTargetSpacing) which is also used for BIP9 deployments.
@@ -87,8 +91,11 @@ struct Params {
     bool fPowAllowMinDifficultyBlocks;
     bool fPowNoRetargeting;
     int64_t nPowTargetSpacing;
-    int64_t nPowTargetTimespan;
-    int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
+    int64_t nPowTargetTimespanV1;
+    int64_t nPowTargetTimespanV2;
+    int64_t DifficultyAdjustmentIntervalV1() const { return nPowTargetTimespanV1 / nPowTargetSpacing; }
+    int64_t DifficultyAdjustmentIntervalV2() const { return nPowTargetTimespanV2 / nPowTargetSpacing; }
+
     /** The best chain should have at least this much work */
     uint256 nMinimumChainWork;
     /** By default assume that the signatures in ancestors of this block are valid */

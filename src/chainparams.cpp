@@ -67,17 +67,22 @@ public:
         consensus.signet_blocks = false;
         consensus.signet_challenge.clear();
         consensus.nSubsidyHalvingInterval = 840000;
-        consensus.BIP16Height = 16; // Fairly certain BIP 16 was always enabled. https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L1885C30-L1885C40
+        consensus.BIP16Height = 16; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L1885 
         consensus.BIP34Height = 16; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L1874 
         consensus.BIP34Hash = uint256S("0xfa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
         consensus.BIP65Height = INT_MAX; // bab3041e8977e0dc3eeff63fe707b92bde1dd449d8efafb248c27c8264cc311a
         consensus.BIP66Height = INT_MAX; // 7aceee012833fa8952f8835d8b1b3ae233cd6ab08fdb27a771d2bd7bdc491894
         consensus.CSVHeight = INT_MAX; // 53e0af7626f7f51ce9f3b6cfc36508a5b1d2f6c4a75ac215dc079442692a4c0b
         consensus.SegwitHeight = INT_MAX; // 0000000000000000001c8018d9cb3b742ef25114f27563e3fc4a1902167f9893
+        consensus.CIP01Height = 20289;
+        consensus.CIP02Height = 21346;
+        consensus.CIP03Height = 27260;
+        consensus.CIP04Height = 46331;
         consensus.MinBIP9WarningHeight = INT_MAX; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 3.5 * 24 * 60 * 60; // 3.5 days
-        consensus.nPowTargetSpacing = 2.5 * 60;
+        consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
+        consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
+        consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 6048; // 75% of 8064
@@ -97,7 +102,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nTimeoutHeight = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         consensus.nMinimumChainWork = uint256S("0x0");
-        consensus.defaultAssumeValid = uint256S("0xbc3b4ec43c4ebb2fef49e6240812549e61ffa623d9418608aa90eaad26c96296"); // 2186382
+        consensus.defaultAssumeValid = uint256S("0xbc3b4ec43c4ebb2fef49e6240812549e61ffa623d9418608aa90eaad26c96296"); // Block 0
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -218,10 +223,15 @@ public:
         consensus.BIP66Height = 76; // 8075c771ed8b495ffd943980a95f702ab34fce3c8c54e379548bda33cc8c0573
         consensus.CSVHeight = 6048; // 00000000025e930139bac5c6c31a403776da130831ab85be56578f3fa75369bb
         consensus.SegwitHeight = 6048; // 00000000002b980fcd729daaa248fd9316a5200e9b367f4ff2c42453e84201ca
+        consensus.CIP01Height = 0;
+        consensus.CIP02Height = 0;
+        consensus.CIP03Height = 0;
+        consensus.CIP04Height = 0;
         consensus.MinBIP9WarningHeight = 8064; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 3.5 * 24 * 60 * 60; // 3.5 days
-        consensus.nPowTargetSpacing = 2.5 * 60;
+        consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
+        consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
+        consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
@@ -315,10 +325,15 @@ public:
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in functional tests)
         consensus.CSVHeight = 432; // CSV activated on regtest (Used in rpc activation tests)
         consensus.SegwitHeight = 0; // SEGWIT is always activated on regtest unless overridden
+        consensus.CIP01Height = 0;
+        consensus.CIP02Height = 0;
+        consensus.CIP03Height = 0;
+        consensus.CIP04Height = 0;
         consensus.MinBIP9WarningHeight = 0;
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 3.5 * 24 * 60 * 60; // 3.5 days
-        consensus.nPowTargetSpacing = 2.5 * 60;
+        consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
+        consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
+        consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
