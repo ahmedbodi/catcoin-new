@@ -21,28 +21,28 @@ jobs:
             apt_get: python3 g++-arm-linux-gnueabihf
 
           - name: AARCH64
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: aarch64-linux-gnu
             apt_get: python3 g++-aarch64-linux-gnu
 
           - name: Win64
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: x86_64-w64-mingw32
             apt_get: python3 nsis g++-mingw-w64-x86-64 wine-binfmt wine64
 
           - name: 32-bit + dash
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: i686-pc-linux-gnu
             apt_get: g++-multilib python3-zmq
 
           - name: x86_64 Linux
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: x86_64-unknown-linux-gnu
             apt_get: python3-zmq qtbase5-dev qttools5-dev-tools libqt5svg5-dev libqt5charts5-dev libqrencode-dev protobuf-compiler libdbus-1-dev libharfbuzz-dev libprotobuf-dev
             dep_opts: NO_QT=1 NO_UPNP=1 DEBUG=1 ALLOW_HOST_PACKAGES=1
 
           - name: macOS 10.14
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: x86_64-apple-darwin14
             apt_get: cmake imagemagick libcap-dev librsvg2-bin libz-dev libbz2-dev libtiff-tools python3-dev python3-setuptools
             OSX_SDK: 10.14
@@ -116,7 +116,7 @@ jobs:
       matrix:
         config:
           - name: ARM 32-bit [GOAL:install]  [no unit or functional tests]
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: arm-linux-gnueabihf
             apt_get: python3 g++-arm-linux-gnueabihf
             unit_tests: false
@@ -128,7 +128,7 @@ jobs:
             type: linux
 
           - name: AARCH64 [GOAL:install] [no unit or functional tests]
-            os: ubuntu-18.04
+            os: ubuntu-latest
             host: aarch64-linux-gnu
             apt_get: python3 g++-aarch64-linux-gnu
             unit_tests: false
