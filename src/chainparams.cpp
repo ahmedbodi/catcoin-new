@@ -101,8 +101,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nStartHeight = Consensus::BIP9Deployment::NEVER_ACTIVE;
         consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nTimeoutHeight = Consensus::BIP9Deployment::NO_TIMEOUT;
 
-        consensus.nMinimumChainWork = uint256S("0x0");
-        consensus.defaultAssumeValid = uint256S("0xbc3b4ec43c4ebb2fef49e6240812549e61ffa623d9418608aa90eaad26c96296"); // Block 0
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000004853b14a65c5bb6c"); // getblockchaininfo chainwork field @ Block 369630
+        consensus.defaultAssumeValid = uint256S("0x09446a44415b5c411795b963e1db3558b571eaa82b961f27d9645c99999c0d38"); // Block 369630
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
