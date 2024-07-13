@@ -44,7 +44,7 @@ const CBaseChainParams& BaseParams()
 std::unique_ptr<CBaseChainParams> CreateBaseChainParams(const std::string& chain)
 {
     if (chain == CBaseChainParams::MAIN) {
-        return MakeUnique<CBaseChainParams>("", 9332, 9333);
+        return MakeUnique<CBaseChainParams>("", 9332, 9932); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/bitcoinrpc.cpp#L42C52-L42C56
     } else if (chain == CBaseChainParams::TESTNET) {
         return MakeUnique<CBaseChainParams>("testnet4", 19332, 19335);
     } else if (chain == CBaseChainParams::SIGNET) {

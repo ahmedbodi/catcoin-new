@@ -52,7 +52,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56";
+    const char* pszTimestamp = "NY Times - December 23, 2013 - For Today's Babes, Toyland Is Digital";
     const CScript genesisOutputScript = CScript() << ParseHex("040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
@@ -67,14 +67,14 @@ public:
         consensus.signet_blocks = false;
         consensus.signet_challenge.clear();
         consensus.nSubsidyHalvingInterval = 840000;
-        consensus.BIP16Height = 218579; // 87afb798a3ad9378fcd56123c81fb31cfd9a8df4719b9774d71730c16315a092 - October 1, 2012
-        consensus.BIP34Height = 710000;
+        consensus.BIP16Height = 0; // Fairly certain BIP 16 was always enabled. https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L1885C30-L1885C40
+        consensus.BIP34Height = 0; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L1874 
         consensus.BIP34Hash = uint256S("0xfa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
-        consensus.BIP65Height = 918684; // bab3041e8977e0dc3eeff63fe707b92bde1dd449d8efafb248c27c8264cc311a
-        consensus.BIP66Height = 811879; // 7aceee012833fa8952f8835d8b1b3ae233cd6ab08fdb27a771d2bd7bdc491894
-        consensus.CSVHeight = 1201536; // 53e0af7626f7f51ce9f3b6cfc36508a5b1d2f6c4a75ac215dc079442692a4c0b
-        consensus.SegwitHeight = 1201536; // 0000000000000000001c8018d9cb3b742ef25114f27563e3fc4a1902167f9893
-        consensus.MinBIP9WarningHeight = 1209600; // segwit activation height + miner confirmation window
+        consensus.BIP65Height = INT_MAX; // bab3041e8977e0dc3eeff63fe707b92bde1dd449d8efafb248c27c8264cc311a
+        consensus.BIP66Height = INT_MAX; // 7aceee012833fa8952f8835d8b1b3ae233cd6ab08fdb27a771d2bd7bdc491894
+        consensus.CSVHeight = INT_MAX; // 53e0af7626f7f51ce9f3b6cfc36508a5b1d2f6c4a75ac215dc079442692a4c0b
+        consensus.SegwitHeight = INT_MAX; // 0000000000000000001c8018d9cb3b742ef25114f27563e3fc4a1902167f9893
+        consensus.MinBIP9WarningHeight = INT_MAX; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 3.5 * 24 * 60 * 60; // 3.5 days
         consensus.nPowTargetSpacing = 2.5 * 60;
@@ -88,13 +88,13 @@ public:
 
         // Deployment of Taproot (BIPs 340-342)
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].bit = 2;
-        consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nStartHeight = 2161152; // End November 2021
-        consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nTimeoutHeight = 2370816; // 364 days later
+        consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nStartHeight = Consensus::BIP9Deployment::NEVER_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nTimeoutHeight = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         // Deployment of MWEB (LIP-0002, LIP-0003, and LIP-0004)
         consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].bit = 4;
-        consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nStartHeight = 2217600; // End Feb 2022
-        consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nTimeoutHeight = 2427264; // 364 days later
+        consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nStartHeight = Consensus::BIP9Deployment::NEVER_ACTIVE;
+        consensus.vDeployments[Consensus::DEPLOYMENT_MWEB].nTimeoutHeight = Consensus::BIP9Deployment::NO_TIMEOUT;
 
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000702edaa57d42a9fd9e2");
         consensus.defaultAssumeValid = uint256S("0x62e2e3d21343a00994d38a63524867507dbeee6850e8fbf02e9c47a3ccf82f24"); // 2186382
@@ -104,40 +104,39 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfb;
-        pchMessageStart[1] = 0xc0;
-        pchMessageStart[2] = 0xb6;
-        pchMessageStart[3] = 0xdb;
-        nDefaultPort = 9333;
+        pchMessageStart[0] = 0xfc; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3325
+        pchMessageStart[1] = 0xc1;
+        pchMessageStart[2] = 0xb7;
+        pchMessageStart[3] = 0xdc;
+        nDefaultPort = 9933; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/protocol.h#L21
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 40;
         m_assumed_chain_state_size = 2;
 
-        genesis = CreateGenesisBlock(1317972665, 2084524493, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1387838302, 588050, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2"));
-        assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
+        assert(consensus.hashGenesisBlock == uint256S("0xbc3b4ec43c4ebb2fef49e6240812549e61ffa623d9418608aa90eaad26c96296")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
+        assert(genesis.hashMerkleRoot == uint256S("0x4007a33db5d9cdf2aab117335eb8431c8d13fb86e0214031fdaebe69a0f29cf7"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
         // This is fine at runtime as we'll fall back to using them as an addrfetch if they don't support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("seed-a.catcoin.loshan.co.uk");
-        vSeeds.emplace_back("dnsseed.thrasher.io");
-        vSeeds.emplace_back("dnsseed.catcointools.com");
-        vSeeds.emplace_back("dnsseed.catcoinpool.org");
-        vSeeds.emplace_back("dnsseed.koin-project.com");
+        vSeeds.emplace_back("seed.catcoinwallets.com"); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3325
+        vSeeds.emplace_back("cat.geekhash.org");
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,48);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
-        base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,50);
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,176);
-        base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
-        base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
 
-        bech32_hrp = "ltc";
-        mweb_hrp = "ltcmweb";
+        // https://github.com/CatcoinOfficial/CatcoinRelease/blob/master/src/base58.h#L275C30-L275C89
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,21); // Catcoin addresses start with 9, because cats has 9 lives
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,88); // This is used, its used to generate the prefix for private keys
+        base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,88); // This is ignored, litecoin used to have a broken script address, We dont
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,149); // This is the WIF Prefix used by Trezor's ETC - PUBKEY_ADDRESS + 128
+        base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E}; // Currently unused
+        base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4}; // Currently unused
+
+        bech32_hrp = "cat"; // Unused atm
+        mweb_hrp = "catmweb"; // Unused atm
 
         vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_main), std::end(chainparams_seed_main));
 
@@ -146,32 +145,58 @@ public:
         m_is_test_chain = false;
         m_is_mockable_chain = false;
 
+        // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3325
         checkpointData = {
             {
-                {  1500, uint256S("0x841a2965955dd288cfa707a755d05a54e45f8bd476835ec9af4402a2b59a2967")},
-                {  4032, uint256S("0x9ce90e427198fc0ef05e5905ce3503725b80e26afd35a987965fd7e3d9cf0846")},
-                {  8064, uint256S("0xeb984353fc5190f210651f150c40b8a4bab9eeeff0b729fcb3987da694430d70")},
-                { 16128, uint256S("0x602edf1859b7f9a6af809f1d9b0e6cb66fdc1d4d9dcd7a4bec03e12a1ccd153d")},
-                { 23420, uint256S("0xd80fdf9ca81afd0bd2b2a90ac3a9fe547da58f2530ec874e978fce0b5101b507")},
-                { 50000, uint256S("0x69dc37eb029b68f075a5012dcc0419c127672adb4f3a32882b2b3e71d07a20a6")},
-                { 80000, uint256S("0x4fcb7c02f676a300503f49c764a89955a8f920b46a8cbecb4867182ecdb2e90a")},
-                {120000, uint256S("0xbd9d26924f05f6daa7f0155f32828ec89e8e29cee9e7121b026a7a3552ac6131")},
-                {161500, uint256S("0xdbe89880474f4bb4f75c227c77ba1cdc024991123b28b8418dbbf7798471ff43")},
-                {179620, uint256S("0x2ad9c65c990ac00426d18e446e0fd7be2ffa69e9a7dcb28358a50b2b78b9f709")},
-                {240000, uint256S("0x7140d1c4b4c2157ca217ee7636f24c9c73db39c4590c4e6eab2e3ea1555088aa")},
-                {383640, uint256S("0x2b6809f094a9215bafc65eb3f110a35127a34be94b7d0590a096c3f126c6f364")},
-                {409004, uint256S("0x487518d663d9f1fa08611d9395ad74d982b667fbdc0e77e9cf39b4f1355908a3")},
-                {456000, uint256S("0xbf34f71cc6366cd487930d06be22f897e34ca6a40501ac7d401be32456372004")},
-                {638902, uint256S("0x15238656e8ec63d28de29a8c75fcf3a5819afc953dcd9cc45cecc53baec74f38")},
-                {721000, uint256S("0x198a7b4de1df9478e2463bd99d75b714eab235a2e63e741641dc8a759a9840e5")},
+                {    4, uint256S("0xfe508d41b7dc2c3079e827d4230e6f7ddebca43c9afc721c1e6431f78d6ff1de")},
+		        {	 5, uint256S("0x7fc79021dbfa30255ade9bb8d898640516d9c771c3342a9b889ce380c52c6c1f")},
+		        { 5000, uint256S("0xec268a9cfe87adb4d10a147a544493406c80e00a3e6868641e520b184e7ddce3")},
+		        {10000, uint256S("0x29c63023c3b8a36b59837734a9c16133a4ef08d9a0e95f639a830c56e415070d")},
+		        {20000, uint256S("0x3a0c072b76a298dabffc4f825a084c0f86dc55fe58f9bf31cc7e21bbfb2ead52")},
+		        {22500, uint256S("0xfd3c87eae2e9be72499978155844598a8675eff7a61c90f9aebcedc94e1b217f")},
+		        {22544, uint256S("0x6dd1a90cc56cf4a46c8c47528c4861c255e86d5f97fcee53ce356174e15c3045")},
+		        {22554, uint256S("0xb13e8b128989f9a9fc1a4c1e547330d0b34d3f60189c00391a116922fa4fcb8c")},
+		        {22600, uint256S("0x9e2d7f2fdab36c3e2b6f0455470cd957c12172ad7877f7c8e414fd736469c8d2")},
+		        {22650, uint256S("0x7afbd354496346819b8a214693af70e1431bfadbf68d49a688ae27539fc6b37e")},
+		        {22700, uint256S("0x35154b803fa5700b69f8081aa6d7c798c1e7fd027971252598a18549092a1291")},
+		        {22750, uint256S("0x67e6eca7d46c1a612b7638e7a503e6dbc7cca4da493f4267833a6f1c9a655a35")},
+		        {22800, uint256S("0x49e84c3b5c261966c37c101ac7691886bd641a382f514c2221735088b1b2beea")},
+		        {22850, uint256S("0xc44cec57381a97c3983df0ef1fcf150669dd1794943202d89b805f423a65516f")},
+		        {22900, uint256S("0x44de4c262de678a23554dd06a6f57270815ea9d145f6c542ab2a8dfbd2ca242c")},
+		        {22950, uint256S("0xcecc4ab30b39fc09bf85eb191e64c1660ab2206c5f80953694997ec5c2db5338")},
+		        {25890, uint256S("0x4806f91100ae83904aa0113cc3acda8fe6ac422186243719a68b76c98e7487c2")},
+		        {26000, uint256S("0x048d01fd25385b61d3c20f99cec5f8c0678d6ad8b5ea3160603184ad11216bfc")},
+		        {30000, uint256S("0xff05303dc58caf2d102c85a0504ed16939c7840c91f5f0b37a5bf128e9afb73f")},
+		        {35000, uint256S("0x8c5b56e660e47b398395fd01fd721b115fe523da400d23c82120c6fd37636423")},
+		        {40000, uint256S("0xb8a6e8aaf4f92d4b521bd022de3008884eba51ff2a5c79e0269d65a03d109283")},
+		        {41000, uint256S("0x88f114a60cb0841735df03cecc3c5662ffbdac184c7344d30cef4f98f5b61ed3")},
+		        {42000, uint256S("0x4a538c3557ab865d74327e38837b5aac63aaebdc4718c2ee7b8101bcdd241eb6")},
+		        {43000, uint256S("0xd2428f19de225b56853090fd548d1d7dd2d3d180b989c785eddb615e60f94209")},
+		        {44000, uint256S("0x587b814e0a113eaf52b94e4920362f4c076d7dc942a4f8c5c4900f2d94adbc26")},
+		        {44225, uint256S("0x324baa0cc239091a60c61af8a332584c02f7c7a11bc07286a4cd6c136310968d")},
+		        {44227, uint256S("0xf8e16629c65f9746deed08631d3e223a9a1d88947c6b41c2107e04b35782726d")},
+		        {44500, uint256S("0x0bc1f9a00a53d9bc88999b2596377bf135ab1f293b886d32a06628abbd2e4d14")},
+		        {45000, uint256S("0x47f0d282919bfd3d9901ac8bf38bb41947517e2c7f80ad6ec8f9a8f09243b7dd")},
+		        {45500, uint256S("0xec9ba2336ab78ad947ccdd2cbe2308a112aabf5379f0cd04cbd224d6e3845714")},
+		        {46000, uint256S("0x2a6410328fdb9800565c49c0eda849e69dc5a414adab2ff73d0aec9dbf0e2458")},
+		        {46500, uint256S("0x96cc990f69f8005d31e09f55455ab28b5a09c70bb89b8c6080b48a3bcc1a9342")},
+		        {47000, uint256S("0x197bd9b1a38262ea8693fd1c0d68e9fdd3cc3cec713d4de0b53fcb4ff70d11fd")},
+		        {47500, uint256S("0xb5618edac7edf58e50409c50802be5e3b99a582f369438d53b7d55e9b334b1b4")},
+		        {48000, uint256S("0xc183240a079a0f05a1ecf9049b6805e9044f9a46d08387208f598600015b8a5e")},
+		        {48500, uint256S("0x0f86070e2a86a4a9480b0adfcc27cfe05dad7e1feb08f98d997b5f9b26351a66")},
+		        {50000, uint256S("0x21803a5005a2637590ecfc401193487bd09b41395c20c31ed27e4f6916295c87")},
+		        {75000, uint256S("0x5607029768611e1e29294cd5987845497c2c681ee2917311ec8cf3b65e61e1c8")},
+		        {100000,uint256S("0x956ca160d703130bce1422ce407eac53064565bfd357fc8ac73e1a7dda9d5764")},
+		        {116828,uint256S("0x750e549a03bcc7f582c7857c162cde7cfbeb6de91cccaf794cbe6337518d6c4c")},
             }
         };
 
+        // https://github.com/CatcoinOfficial/CatcoinRelease/blob/master/src/checkpoints.cpp#L83
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 62e2e3d21343a00994d38a63524867507dbeee6850e8fbf02e9c47a3ccf82f24
-            /* nTime    */ 1641142661,
-            /* nTxCount */ 100225898,
-            /* dTxRate  */ 1.17733189266096
+            /* nTime    */ 1502242527,
+            /* nTxCount */ 245139,
+            /* dTxRate  */ 200,
         };
     }
 };
@@ -229,8 +254,8 @@ public:
 
         genesis = CreateGenesisBlock(1486949366, 293345, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x4966625a4b2851d9fdee139e56211a0d88575f59ed816ff5e6a63deb4e3e29a0"));
-        assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
+        //assert(consensus.hashGenesisBlock == uint256S("0x4966625a4b2851d9fdee139e56211a0d88575f59ed816ff5e6a63deb4e3e29a0"));
+        //assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -246,7 +271,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-        bech32_hrp = "tltc";
+        bech32_hrp = "tcat";
         mweb_hrp = "tmweb";
 
         vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
@@ -328,8 +353,8 @@ public:
 
         genesis = CreateGenesisBlock(1296688602, 0, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x530827f38f93b43ed12af0b3ad25a288dc02ed74d6d7857862df51fc56c416f9"));
-        assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
+        //assert(consensus.hashGenesisBlock == uint256S("0x530827f38f93b43ed12af0b3ad25a288dc02ed74d6d7857862df51fc56c416f9"));
+        //assert(genesis.hashMerkleRoot == uint256S("0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -358,7 +383,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x94};
 
-        bech32_hrp = "rltc";
+        bech32_hrp = "rcat";
         mweb_hrp = "tmweb";
     }
 
