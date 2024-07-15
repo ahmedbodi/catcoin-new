@@ -320,7 +320,7 @@ BITCOIN_TEST_SUITE += \
   libmw/test/framework/include/test_framework/Deserializer.h \
   libmw/test/framework/include/test_framework/Miner.h \
   libmw/test/framework/include/test_framework/TestLeafSet.h \
-  libmw/test/framework/include/test_framework/TestMWeb.h \
+  libmw/test/framework/include/test_framework/TestMWEB.h \
   libmw/test/framework/include/test_framework/TxBuilder.h
 
 BITCOIN_TESTS += \
