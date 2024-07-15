@@ -299,12 +299,14 @@ unsigned int GetNextWorkRequired_CIP05(const CBlockIndex* pindexLast, const CBlo
         bnNew /= params.nPowTargetSpacing;
 
         // difficulty should never go below (human view) the starting difficulty
-        if (bnNew > bnProofOfWorkLimit)
+        if (bnNew > bnProofOfWorkLimit) {
             bnNew = bnProofOfWorkLimit;
+        }
 
 	    // Make sure that diff is not set too low, ever ... Might find a min diff higher than 0.000228882 (or 15 on cgminer's output)
-	    if (bnNew.GetCompact() > 0x1e0fffff)
+	    if (bnNew.GetCompact() > 0x1e0fffff) {
             bnNew.SetCompact(0x1e0fffff);
+        }
         return bnNew.GetCompact();
     }
 
