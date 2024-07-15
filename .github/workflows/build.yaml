@@ -104,7 +104,6 @@ jobs:
     env:
       APT_BASE: ccache
       SDK_URL: https://bitcoincore.org/depends-sources/sdks
-      APT_BASE: ccache
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       CCACHE_SIZE: 500M
       CCACHE_COMPRESS: 1
@@ -298,7 +297,7 @@ jobs:
 
       - name: Zip Windows Builds
         if: ${{ matrix.config.host == 'x86_64-w64-mingw32' }}
-        run: zip -rj Catcoin-Windows.zip /home/runner/work/catcoin-new/catcoin-new/build/Catcoin-x86_64-w64-mingw32/release
+        run: zip -rj Catcoin-Windows.zip /home/runner/work/catcoin-new/catcoin-new/build/catcoin-x86_64-w64-mingw32/release
 
       - name: Zip Linux Builds
         if: ${{ matrix.config.host == 'x86_64-unknown-linux-gnu' }}
