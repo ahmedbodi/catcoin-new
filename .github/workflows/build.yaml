@@ -195,15 +195,14 @@ jobs:
 
       - name: depends cache files
         if: matrix.config.no_depends != 1
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             depends/built
             depends/sdk-sources
             depends/${{ matrix.config.host }}
-          key: ${{ runner.os }}-depends-${{ matrix.config.host }}-
-          restore-keys: |
-            ${{ runner.os }}-depends-${{ matrix.config.host }}-
+          key: ${{ runner.os }}-depends-${{ matrix.config.host }}
+          restore-keys: ${{ runner.os }}-depends-${{ matrix.config.host }}
 
       - name: ccache cache files
         uses: actions/cache@v4
