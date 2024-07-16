@@ -1984,7 +1984,6 @@ void static ProcessGetData(CNode& pfrom, Peer& peer, const ChainstateManager& ch
 
         CTransactionRef tx = FindTxForGetData(mempool, pfrom, ToGenTxid(inv), mempool_req, now);
         if (tx) {
-            LOCK(cs_main);
             // WTX and WITNESS_TX imply we serialize with witness
             int nSendFlags = (inv.IsMsgTx() ? SERIALIZE_TRANSACTION_NO_WITNESS | SERIALIZE_NO_MWEB : (State(pfrom.GetId())->fHaveMWEB ? 0 : SERIALIZE_NO_MWEB));
             connman.PushMessage(&pfrom, msgMaker.Make(nSendFlags, NetMsgType::TX, *tx));
