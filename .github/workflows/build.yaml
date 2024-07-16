@@ -172,8 +172,7 @@ jobs:
             functional_tests: false
             goal: deploy
             symbol_check: true
-            BITCOIN_CONFIG: "--enable-gui --enable-reduce-exports --enable-werror --disable-online-rust --disable-tests --disable-bench"
-
+            BITCOIN_CONFIG: "--enable-gui --enable-reduce-exports --disable-online-rust --disable-tests --disable-bench"
     steps:
       - name: Get Source
         uses: actions/checkout@v2
