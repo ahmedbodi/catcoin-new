@@ -1036,7 +1036,6 @@ bool CCoinsViewMemPool::GetCoin(const COutPoint &outpoint, Coin &coin) const {
 
 bool CCoinsViewMemPool::HaveCoin(const OutputIndex& index) const 
 {
-    LOCK(mempool.cs);
     if (index.type() == typeid(mw::Hash)) {
         if (mempool.mapNextTx.find(index) != mempool.mapNextTx.end()) {
             return false;
@@ -1056,7 +1055,6 @@ bool CCoinsViewMemPool::HaveCoin(const OutputIndex& index) const
 
 bool CCoinsViewMemPool::GetMWEBCoin(const mw::Hash& output_id, Output& coin) const
 {
-    LOCK(mempool.cs);
     if (mempool.mapNextTx.find(output_id) != mempool.mapNextTx.end()) {
         return false;
     }
