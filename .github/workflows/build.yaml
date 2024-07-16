@@ -1,6 +1,20 @@
 name: CI Actions for Catcoin
 
-on: [push, pull_request]
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+     release:
+       type: boolean
+       description: 'Tick = Release, No tick = Pre-release'
+       required: true
+     tags:
+      description: 'Set tag for release'
+      required: true
+     release-name:
+       description: 'Specify a name for release'
+       required: true
+
 jobs:
   build_depends:
     name: Depends-${{ matrix.config.name }}
