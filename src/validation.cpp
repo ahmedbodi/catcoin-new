@@ -1297,6 +1297,7 @@ void CChainState::InitCoinsDB(
     bool should_wipe,
     std::string leveldb_name)
 {
+    LOCK(cs_main);
     if (!m_from_snapshot_blockhash.IsNull()) {
         leveldb_name += "_" + m_from_snapshot_blockhash.ToString();
     }
