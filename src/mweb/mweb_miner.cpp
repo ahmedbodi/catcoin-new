@@ -12,6 +12,7 @@ using namespace MWEB;
 
 void Miner::NewBlock(const uint64_t nHeight)
 {
+    LOCK(cs_main);
     mweb_builder = std::make_shared<mw::BlockBuilder>(nHeight, ::ChainstateActive().CoinsTip().GetMWEBView());
     hogex_fees = 0;
     hogex_sigops = 0;
