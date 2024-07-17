@@ -1292,6 +1292,15 @@ std::string CopyrightHolders(const std::string& strPrefix)
             strCopyrightHolders += "\n" + strYear + "The Bitcoin Core developers";
         }
     }
+
+    // Make sure Litecoin Core copyright is not removed by accident
+    if (copyright_devs.find("Litecoin Core") == std::string::npos) {
+        if (strPrefix.find("2011") != std::string::npos) {
+            std::string strYear = strPrefix;
+            strYear.replace(strYear.find("2011"), sizeof("2011")-1, "2009");
+            strCopyrightHolders += "\n" + strYear + "The Litecoin Core developers";
+        }
+    }
     return strCopyrightHolders;
 }
 
