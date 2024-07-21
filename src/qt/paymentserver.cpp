@@ -104,16 +104,16 @@ void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
                 if (IsValidDestinationString(r.address.toStdString(), *tempChainParams)) {
                     SelectParams(CBaseChainParams::MAIN);
                 } else if (IsValidDestinationString(r.address.toStdString(), *testnet1ChainParams)) {
-                    tempChainParams = testnet1ChainParams;
+                    tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET1);
                     SelectParams(CBaseChainParams::TESTNET1);
                 } else if (IsValidDestinationString(r.address.toStdString(), *testnet2ChainParams)) {
-                    tempChainParams = testnet2ChainParams;
+                    tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET2);
                     SelectParams(CBaseChainParams::TESTNET2);
                 } else if (IsValidDestinationString(r.address.toStdString(), *testnet3ChainParams)) {
-                    tempChainParams = testnet3ChainParams;
+                    tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET3);
                     SelectParams(CBaseChainParams::TESTNET3);
                 } else if (IsValidDestinationString(r.address.toStdString(), *testnet4ChainParams)) {
-                    tempChainParams = testnet4ChainParams;
+                    tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET4);
                     SelectParams(CBaseChainParams::TESTNET4);
                 } else {
                     tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET5);
