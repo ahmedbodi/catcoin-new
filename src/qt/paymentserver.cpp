@@ -98,8 +98,8 @@ void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
                 auto testnet1ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET1);
                 auto testnet2ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET2);
                 auto testnet3ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET3);
-                auto testnetChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET4);
-                auto testnet1ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET5);
+                auto testnet4ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET4);
+                auto testnet5ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET5);
 
                 if (IsValidDestinationString(r.address.toStdString(), *tempChainParams)) {
                     SelectParams(CBaseChainParams::MAIN);
