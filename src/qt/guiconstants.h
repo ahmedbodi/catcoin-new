@@ -45,7 +45,11 @@ static const int TOOLTIP_WRAP_THRESHOLD = 80;
 #define QAPP_ORG_NAME "Catcoin"
 #define QAPP_ORG_DOMAIN "catcoin.org"
 #define QAPP_APP_NAME_DEFAULT "Catcoin-Qt"
-#define QAPP_APP_NAME_TESTNET "Liteocin-Qt-testnet"
+#define QAPP_APP_NAME_TESTNET1 "Catcoin-Qt-testnet1"
+#define QAPP_APP_NAME_TESTNET2 "Catcoin-Qt-testnet2"
+#define QAPP_APP_NAME_TESTNET3 "Catcoin-Qt-testnet3"
+#define QAPP_APP_NAME_TESTNET4 "Catcoin-Qt-testnet4"
+#define QAPP_APP_NAME_TESTNET5 "Catcoin-Qt-testnet5"
 #define QAPP_APP_NAME_SIGNET "Catcoin-Qt-signet"
 #define QAPP_APP_NAME_REGTEST "Catcoin-Qt-regtest"
 

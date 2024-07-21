@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(StealthAddresses)
     LegacyScriptPubKeyMan& keyman = *wallet.GetOrCreateLegacyScriptPubKeyMan();
 
     // Set HD seed
-    CKey key = DecodeSecret("6usgJoGKXW12i7Ruxy8Z1C5hrRMVGfLmi9NU9uDQJMPXDJ6tQAH");
+    CKey key = DecodeSecret("P8QoLM4Ei1x2b9qPkh4Bkssx1WwyGqM7mt4GuC7jTRBue4RBvFFo");
     CPubKey seed = keyman.DeriveNewSeed(key);
     keyman.SetHDSeed(seed);
     keyman.TopUp();
@@ -59,26 +59,26 @@ BOOST_AUTO_TEST_CASE(StealthAddresses)
     // Check generated MWEB keychain
     mw::Keychain::Ptr mweb_keychain = keyman.GetMWEBKeychain();
     BOOST_CHECK(mweb_keychain != nullptr);
-    BOOST_CHECK(mweb_keychain->GetSpendSecret().ToHex() == "2396e5c33b07dfa2d9e70da1dcbdad0ad2399e5672ff2d4afbe3b20bccf3ba1b");
-    BOOST_CHECK(mweb_keychain->GetScanSecret().ToHex() == "918271168655385e387907612ee09d755be50c4685528f9f53eabae380ecba97");
+    BOOST_CHECK(mweb_keychain->GetSpendSecret().ToHex() == "7e0a881a7598dd7a3f64e0a348bb0344b880673da4b60fb19b0a86f8b1dbbd89");
+    BOOST_CHECK(mweb_keychain->GetScanSecret().ToHex() == "12857099b301325ff9dac608814ee0a0386ab6f31724c83ace566b304b5d93d5");
 
     // Check "change" (idx=0) address is USED
     StealthAddress change_address = mweb_keychain->GetStealthAddress(0);
-    BOOST_CHECK(EncodeDestination(change_address) == "catmweb1qq20e2arnhvxw97katjkmsd35agw3capxjkrkh7dk8d30rczm8ypxuq329nwh2twmchhqn3jqh7ua4ps539f6aazh79jy76urqht4qa59ts3at6gf");
+    BOOST_CHECK(EncodeDestination(change_address) == "catmweb1qqfp2dcdde24gm59znyvlw72wh6xq9hmm8wzycduzcr95xuxmlund7q4kf7ttrnqkvy2vqxxazuc5fsvh6ug3ypywey92u0q9243k5zt26gwcuu9f");
     BOOST_CHECK(keyman.IsMine(change_address) == ISMINE_SPENDABLE);
     BOOST_CHECK(keyman.GetAllReserveKeys().find(change_address.B().GetID()) == keyman.GetAllReserveKeys().end());
     BOOST_CHECK(*keyman.GetMetadata(change_address)->mweb_index == 0);
 
     // Check "peg-in" (idx=1) address is USED
     StealthAddress pegin_address = mweb_keychain->GetStealthAddress(1);
-    BOOST_CHECK(EncodeDestination(pegin_address) == "catmweb1qqg5hddkl4uhspjwg9tkmatxa4s6gswdaq9swl8vsg5xxznmye7phcqatzc62mzkg788tsrfcuegxe9q3agf5cplw7ztqdusqf7x3n2tl55x4gvyt");
+    BOOST_CHECK(EncodeDestination(pegin_address) == "catmweb1qqv65wxrqccudwrna9w4fyd8xregsnwmvqzwzu8kjuy7cyxzq8upkgq5c6emh06xm0wfh2tuz24e9g7mm2y8mhywu7p8sy699rx23mywaggwrd62r");
     BOOST_CHECK(keyman.IsMine(pegin_address) == ISMINE_SPENDABLE);
     BOOST_CHECK(keyman.GetAllReserveKeys().find(pegin_address.B().GetID()) == keyman.GetAllReserveKeys().end());
     BOOST_CHECK(*keyman.GetMetadata(pegin_address)->mweb_index == 1);
 
     // Check first receive (idx=2) address is UNUSED
     StealthAddress receive_address = mweb_keychain->GetStealthAddress(2);
-    BOOST_CHECK(EncodeDestination(receive_address) == "catmweb1qq0yq03ewm830ugmkkvrvjmyyeslcpwk8ayd7k27qx63sryy6kx3ksqm3k6jd24ld3r5dp5lzx7rm7uyxfujf8sn7v4nlxeqwrcq6k6xxwqdc6tl3");
+    BOOST_CHECK(EncodeDestination(receive_address) == "catmweb1qq0zdea368ezsxa9x5wshcfmszq4epuf62ys4w72g3nseyat43xfwkqj8ery4wjkxuc3cy2epgt6z9p8eze99grfyljt574y30lryx0atgc326rfj");
     BOOST_CHECK(keyman.IsMine(receive_address) == ISMINE_SPENDABLE);
     BOOST_CHECK(keyman.GetAllReserveKeys().find(receive_address.B().GetID()) != keyman.GetAllReserveKeys().end());
     BOOST_CHECK(*keyman.GetMetadata(receive_address)->mweb_index == 2);

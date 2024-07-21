@@ -46,7 +46,7 @@ static bool WalletAppInit(int argc, char* argv[])
         std::string usage = strprintf("%s catcoin-wallet version", PACKAGE_NAME) + " " + FormatFullVersion() + "\n\n" +
                                       "catcoin-wallet is an offline tool for creating and interacting with " PACKAGE_NAME " wallet files.\n" +
                                       "By default catcoin-wallet will act on wallets in the default mainnet wallet directory in the datadir.\n" +
-                                      "To change the target wallet, use the -datadir, -wallet and -testnet/-regtest arguments.\n\n" +
+                                      "To change the target wallet, use the -datadir, -wallet and -testnet1/-testnet2/-testnet3/-testnet4/-testnet5/-regtest arguments.\n\n" +
                                       "Usage:\n" +
                                      "  catcoin-wallet [options] <command>\n\n" +
                                      gArgs.GetHelpMessage();

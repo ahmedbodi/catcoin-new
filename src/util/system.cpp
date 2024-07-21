@@ -265,7 +265,11 @@ const std::list<SectionInfo> ArgsManager::GetUnrecognizedSections() const
     static const std::set<std::string> available_sections{
         CBaseChainParams::REGTEST,
         CBaseChainParams::SIGNET,
-        CBaseChainParams::TESTNET,
+        CBaseChainParams::TESTNET1,
+        CBaseChainParams::TESTNET2,
+        CBaseChainParams::TESTNET3,
+        CBaseChainParams::TESTNET4,
+        CBaseChainParams::TESTNET5,
         CBaseChainParams::MAIN
     };
 
@@ -941,20 +945,36 @@ std::string ArgsManager::GetChainName() const
 
     const bool fRegTest = get_net("-regtest");
     const bool fSigNet  = get_net("-signet");
-    const bool fTestNet = get_net("-testnet");
+    const bool fTestNet1 = get_net("-testnet1");
+    const bool fTestNet2 = get_net("-testnet2");
+    const bool fTestNet3 = get_net("-testnet3");
+    const bool fTestNet4 = get_net("-testnet4");
+    const bool fTestNet5 = get_net("-testnet5");
     const bool is_chain_arg_set = IsArgSet("-chain");
 
-    if ((int)is_chain_arg_set + (int)fRegTest + (int)fSigNet + (int)fTestNet > 1) {
-        throw std::runtime_error("Invalid combination of -regtest, -signet, -testnet and -chain. Can use at most one.");
+    if ((int)is_chain_arg_set + (int)fRegTest + (int)fSigNet + (int)fTestNet1 + (int)fTestNet2 + (int)fTestNet3 + (int)fTestNet4 + (int)fTestNet5 > 1) {
+        throw std::runtime_error("Invalid combination of -regtest, -signet, -testnet1, -testnet2, -testnet3, -testnet4, -testnet5 and -chain. Can use at most one.");
     }
     if (fRegTest)
         return CBaseChainParams::REGTEST;
-    if (fSigNet) {
-        return CBaseChainParams::SIGNET;
-    }
-    if (fTestNet)
-        return CBaseChainParams::TESTNET;
 
+    if (fSigNet)
+        return CBaseChainParams::SIGNET;
+
+    if (fTestNet1)
+        return CBaseChainParams::TESTNET1;
+
+    if (fTestNet2)
+        return CBaseChainParams::TESTNET2;
+
+    if (fTestNet3)
+        return CBaseChainParams::TESTNET3;
+
+    if (fTestNet4)
+        return CBaseChainParams::TESTNET4;
+
+    if (fTestNet5)
+        return CBaseChainParams::TESTNET5;
     return GetArg("-chain", CBaseChainParams::MAIN);
 }
 

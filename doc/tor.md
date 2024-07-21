@@ -55,7 +55,7 @@ config file): *Needed for Tor version 0.2.7.0 and older versions of Tor only. Fo
 versions of Tor see [Section 3](#3-automatically-listen-on-tor).*
 
 	HiddenServiceDir /var/lib/tor/catcoin-service/
-	HiddenServicePort 9333 127.0.0.1:9333
+	HiddenServicePort 9333 127.0.0.1:9933
 	HiddenServicePort 19335 127.0.0.1:19335
 
 The directory can be different of course, but virtual port numbers should be equal to

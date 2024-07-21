@@ -50,7 +50,11 @@ static void SetupCliArgs(ArgsManager& argsman)
     SetupHelpOptions(argsman);
 
     const auto defaultBaseParams = CreateBaseChainParams(CBaseChainParams::MAIN);
-    const auto testnetBaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET);
+    const auto testnet1BaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET1);
+    const auto testnet2BaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET2);
+    const auto testnet3BaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET3);
+    const auto testnet4BaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET4);
+    const auto testnet5BaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET5);
     const auto signetBaseParams = CreateBaseChainParams(CBaseChainParams::SIGNET);
     const auto regtestBaseParams = CreateBaseChainParams(CBaseChainParams::REGTEST);
 
@@ -67,7 +71,7 @@ static void SetupCliArgs(ArgsManager& argsman)
     argsman.AddArg("-rpcconnect=<ip>", strprintf("Send commands to node running on <ip> (default: %s)", DEFAULT_RPCCONNECT), ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
     argsman.AddArg("-rpccookiefile=<loc>", "Location of the auth cookie. Relative paths will be prefixed by a net-specific datadir location. (default: data dir)", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
     argsman.AddArg("-rpcpassword=<pw>", "Password for JSON-RPC connections", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
-    argsman.AddArg("-rpcport=<port>", strprintf("Connect to JSON-RPC on <port> (default: %u, testnet: %u, signet: %u, regtest: %u)", defaultBaseParams->RPCPort(), testnetBaseParams->RPCPort(), signetBaseParams->RPCPort(), regtestBaseParams->RPCPort()), ArgsManager::ALLOW_ANY | ArgsManager::NETWORK_ONLY, OptionsCategory::OPTIONS);
+    argsman.AddArg("-rpcport=<port>", strprintf("Connect to JSON-RPC on <port> (default: %u, testnet1: %u, testnet2: %u, testnet3: %u, testnet4: %u, testnet5: %u, signet: %u, regtest: %u)", defaultBaseParams->RPCPort(), testnet1BaseParams->RPCPort(), testnet2BaseParams->RPCPort(), testnet3BaseParams->RPCPort(), testnet4BaseParams->RPCPort(), testnet5BaseParams->RPCPort(), signetBaseParams->RPCPort(), regtestBaseParams->RPCPort()), ArgsManager::ALLOW_ANY | ArgsManager::NETWORK_ONLY, OptionsCategory::OPTIONS);
     argsman.AddArg("-rpcuser=<user>", "Username for JSON-RPC connections", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
     argsman.AddArg("-rpcwait", "Wait for RPC server to start", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
     argsman.AddArg("-rpcwallet=<walletname>", "Send RPC for non-default wallet on RPC server (needs to exactly match corresponding -wallet option passed to catcoind). This changes the RPC endpoint used, e.g. http://127.0.0.1:8332/wallet/<walletname>", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
@@ -338,7 +342,11 @@ private:
     std::vector<Peer> m_peers;
     std::string ChainToString() const
     {
-        if (gArgs.GetChainName() == CBaseChainParams::TESTNET) return " testnet";
+        if (gArgs.GetChainName() == CBaseChainParams::TESTNET1) return " testnet1";
+        if (gArgs.GetChainName() == CBaseChainParams::TESTNET2) return " testnet2";
+        if (gArgs.GetChainName() == CBaseChainParams::TESTNET3) return " testnet3";
+        if (gArgs.GetChainName() == CBaseChainParams::TESTNET4) return " testnet4";
+        if (gArgs.GetChainName() == CBaseChainParams::TESTNET5) return " testnet5";
         if (gArgs.GetChainName() == CBaseChainParams::SIGNET) return " signet";
         if (gArgs.GetChainName() == CBaseChainParams::REGTEST) return " regtest";
         return "";

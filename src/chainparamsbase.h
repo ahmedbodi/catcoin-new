@@ -20,7 +20,11 @@ public:
     ///@{
     /** Chain name strings */
     static const std::string MAIN;
-    static const std::string TESTNET;
+    static const std::string TESTNET1;
+    static const std::string TESTNET2;
+    static const std::string TESTNET3;
+    static const std::string TESTNET4;
+    static const std::string TESTNET5;
     static const std::string SIGNET;
     static const std::string REGTEST;
     ///@}

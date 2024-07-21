@@ -55,7 +55,7 @@ QString BitcoinUnits::shortName(int unit)
     switch(unit)
     {
     case uBTC: return QString::fromUtf8("μCATs");
-    case SAT: return QString("cat");oshi
+    case SAT: return QString("catoshi");
     default: return longName(unit);
     }
 }

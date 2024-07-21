@@ -18,17 +18,33 @@ import random
 from segwit_addr import bech32_encode, decode_segwit_address, convertbits, CHARSET, Encoding
 
 # key types
-PUBKEY_ADDRESS = 48
-SCRIPT_ADDRESS = 5
-SCRIPT_ADDRESS2 = 50
-PUBKEY_ADDRESS_TEST = 111
-SCRIPT_ADDRESS_TEST = 196
-SCRIPT_ADDRESS_TEST2 = 58
-PUBKEY_ADDRESS_REGTEST = 111
-SCRIPT_ADDRESS_REGTEST = 196
-PRIVKEY = 176
-PRIVKEY_TEST = 239
-PRIVKEY_REGTEST = 239
+PUBKEY_ADDRESS_MAINNET = 21
+SCRIPT_ADDRESS_MAINNET = 88
+SECRET_ADDRESS_MAINNET = 149
+
+PUBKEY_ADDRESS_TESTNET1 = 23
+SCRIPT_ADDRESS_TESTNET1 = 83
+SECRET_ADDRESS_TESTNET1 = 151
+
+PUBKEY_ADDRESS_TESTNET2 = 22
+SCRIPT_ADDRESS_TESTNET2 = 82
+SECRET_ADDRESS_TESTNET2 = 150
+
+PUBKEY_ADDRESS_TESTNET3 = 21
+SCRIPT_ADDRESS_TESTNET3 = 81
+SECRET_ADDRESS_TESTNET3 = 149
+
+PUBKEY_ADDRESS_TESTNET4 = 20
+SCRIPT_ADDRESS_TESTNET4 = 80
+SECRET_ADDRESS_TESTNET4 = 148
+
+PUBKEY_ADDRESS_TESTNET5 = 19
+SCRIPT_ADDRESS_TESTNET5 = 79
+SECRET_ADDRESS_TESTNET5 = 147
+
+PUBKEY_ADDRESS_REGTEST = 18
+SCRIPT_ADDRESS_REGTEST = 78
+SECRET_ADDRESS_REGTEST = 146
 
 # script
 OP_0 = 0x00
@@ -54,24 +70,33 @@ metadata_keys = ['isPrivkey', 'chain', 'isCompressed', 'tryCaseFlip']
 templates = [
   # prefix, payload_size, suffix, metadata, output_prefix, output_suffix
   #                                  None = N/A
-  ((PUBKEY_ADDRESS,),         20, (),   (False, 'main',    None,  None), pubkey_prefix, pubkey_suffix),
-  ((SCRIPT_ADDRESS,),         20, (),   (False, 'main',    None,  None), script_prefix, script_suffix),
-  ((SCRIPT_ADDRESS2,),        20, (),   (False, 'main',    None,  None), script_prefix, script_suffix),
-  ((PUBKEY_ADDRESS_TEST,),    20, (),   (False, 'test',    None,  None), pubkey_prefix, pubkey_suffix),
-  ((SCRIPT_ADDRESS_TEST,),    20, (),   (False, 'test',    None,  None), script_prefix, script_suffix),
-  ((SCRIPT_ADDRESS_TEST2,),   20, (),   (False, 'test',    None,  None), script_prefix, script_suffix),
-  ((PUBKEY_ADDRESS_TEST,),    20, (),   (False, 'signet',  None,  None), pubkey_prefix, pubkey_suffix),
-  ((SCRIPT_ADDRESS_TEST,),    20, (),   (False, 'signet',  None,  None), script_prefix, script_suffix),
-  ((PUBKEY_ADDRESS_REGTEST,), 20, (),   (False, 'regtest', None,  None), pubkey_prefix, pubkey_suffix),
-  ((SCRIPT_ADDRESS_REGTEST,), 20, (),   (False, 'regtest', None,  None), script_prefix, script_suffix),
-  ((PRIVKEY,),                32, (),   (True,  'main',    False, None), (),            ()),
-  ((PRIVKEY,),                32, (1,), (True,  'main',    True,  None), (),            ()),
-  ((PRIVKEY_TEST,),           32, (),   (True,  'test',    False, None), (),            ()),
-  ((PRIVKEY_TEST,),           32, (1,), (True,  'test',    True,  None), (),            ()),
-  ((PRIVKEY_TEST,),           32, (),   (True,  'signet',  False, None), (),            ()),
-  ((PRIVKEY_TEST,),           32, (1,), (True,  'signet',  True,  None), (),            ()),
-  ((PRIVKEY_REGTEST,),        32, (),   (True,  'regtest', False, None), (),            ()),
-  ((PRIVKEY_REGTEST,),        32, (1,), (True,  'regtest', True,  None), (),            ())
+  ((PUBKEY_ADDRESS_MAINNET,),         20, (),   (False, 'main',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_MAINNET,),         20, (),   (False, 'main',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_MAINNET,),         32, (),   (True,  'main',    False, None), (),            ()),
+
+  ((PUBKEY_ADDRESS_TESTNET1,),        20, (),   (False, 'testnet1',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_TESTNET1,),        20, (),   (False, 'testnet1',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_TESTNET1,),        32, (),   (True,  'testnet1',    False, None), (),            ()),
+
+  ((PUBKEY_ADDRESS_TESTNET2,),        20, (),   (False, 'testnet2',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_TESTNET2,),        20, (),   (False, 'testnet2',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_TESTNET2,),        32, (),   (True,  'testnet2',    False, None), (),            ()),
+
+  ((PUBKEY_ADDRESS_TESTNET3,),        20, (),   (False, 'testnet3',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_TESTNET3,),        20, (),   (False, 'testnet3',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_TESTNET3,),        32, (),   (True,  'testnet3',    False, None), (),            ()),
+
+  ((PUBKEY_ADDRESS_TESTNET4,),        20, (),   (False, 'testnet4',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_TESTNET4,),        20, (),   (False, 'testnet4',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_TESTNET4,),        32, (),   (True,  'testnet4',    False, None), (),            ()),
+  
+  ((PUBKEY_ADDRESS_TESTNET5,),        20, (),   (False, 'testnet5',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_TESTNET5,),        20, (),   (False, 'testnet5',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_TESTNET5,),        32, (),   (True,  'testnet5',    False, None), (),            ()),
+
+  ((PUBKEY_ADDRESS_REGTEST,),        20, (),   (False, 'regtest',    None,  None), pubkey_prefix, pubkey_suffix),
+  ((SCRIPT_ADDRESS_REGTEST,),        20, (),   (False, 'regtest',    None,  None), script_prefix, script_suffix),
+  ((SECRET_ADDRESS_REGTEST,),        32, (),   (True,  'regtest',    False, None), (),            ()),
 ]
 # templates for valid bech32 sequences
 bech32_templates = [
@@ -80,18 +105,34 @@ bech32_templates = [
   ('cat',    0, 32, (False, 'main',    None, True), Encoding.BECH32,  p2wsh_prefix),
   ('cat',    1, 32, (False, 'main',    None, True), Encoding.BECH32M, p2tr_prefix),
   ('cat',    2,  2, (False, 'main',    None, True), Encoding.BECH32M, (OP_2, 2)),
-  ('tcat',    0, 20, (False, 'test',    None, True), Encoding.BECH32,  p2wpkh_prefix),
-  ('tcat',    0, 32, (False, 'test',    None, True), Encoding.BECH32,  p2wsh_prefix),
-  ('tcat',    1, 32, (False, 'test',    None, True), Encoding.BECH32M, p2tr_prefix),
-  ('tcat',    3, 16, (False, 'test',    None, True), Encoding.BECH32M, (OP_3, 16)),
-  ('tcat',    0, 20, (False, 'signet',  None, True), Encoding.BECH32,  p2wpkh_prefix),
-  ('tcat',    0, 32, (False, 'signet',  None, True), Encoding.BECH32,  p2wsh_prefix),
-  ('tcat',    1, 32, (False, 'signet',  None, True), Encoding.BECH32M, p2tr_prefix),
-  ('tcat',    3, 32, (False, 'signet',  None, True), Encoding.BECH32M, (OP_3, 32)),
-  ('rcat',  0, 20, (False, 'regtest', None, True), Encoding.BECH32,  p2wpkh_prefix),
-  ('rcat',  0, 32, (False, 'regtest', None, True), Encoding.BECH32,  p2wsh_prefix),
-  ('rcat',  1, 32, (False, 'regtest', None, True), Encoding.BECH32M, p2tr_prefix),
-  ('rcat', 16, 40, (False, 'regtest', None, True), Encoding.BECH32M, (OP_16, 40))
+  ('t1cat',    0, 20, (False, 'testnet1',    None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('t1cat',    0, 32, (False, 'testnet1',    None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('t1cat',    1, 32, (False, 'testnet1',    None, True), Encoding.BECH32M, p2tr_prefix),
+  ('t1cat',    3, 16, (False, 'testnet1',    None, True), Encoding.BECH32M, (OP_3, 16)),
+  ('t2cat',  0, 20, (False, 'testnet2',    None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('t2cat',  0, 32, (False, 'testnet2',    None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('t2cat',  1, 32, (False, 'testnet2',    None, True), Encoding.BECH32M, p2tr_prefix),
+  ('t2cat',  3, 16, (False, 'testnet2',    None, True), Encoding.BECH32M, (OP_3, 16)),
+  ('t3cat',  0, 20, (False, 'testnet3',    None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('t3cat',  0, 32, (False, 'testnet3',    None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('t3cat',  1, 32, (False, 'testnet3',    None, True), Encoding.BECH32M, p2tr_prefix),
+  ('t3cat',  3, 16, (False, 'testnet3',    None, True), Encoding.BECH32M, (OP_3, 16)),
+  ('t4cat',  0, 20, (False, 'testnet4',    None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('t4cat',  0, 32, (False, 'testnet4',    None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('t4cat',  1, 32, (False, 'testnet4',    None, True), Encoding.BECH32M, p2tr_prefix),
+  ('t4cat',  3, 16, (False, 'testnet4',    None, True), Encoding.BECH32M, (OP_3, 16)),
+  ('t5cat',  0, 20, (False, 'testnet5',    None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('t5cat',  0, 32, (False, 'testnet5',    None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('t5cat',  1, 32, (False, 'testnet5',    None, True), Encoding.BECH32M, p2tr_prefix),
+  ('t5cat',  3, 16, (False, 'testnet5',    None, True), Encoding.BECH32M, (OP_3, 16)),
+  ('t5cat',  0, 20, (False, 'signet',  None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('t5cat',  0, 32, (False, 'signet',  None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('t5cat',  1, 32, (False, 'signet',  None, True), Encoding.BECH32M, p2tr_prefix),
+  ('t5cat',  3, 32, (False, 'signet',  None, True), Encoding.BECH32M, (OP_3, 32)),
+  ('rcat',   0, 20, (False, 'regtest', None, True), Encoding.BECH32,  p2wpkh_prefix),
+  ('rcat',   0, 32, (False, 'regtest', None, True), Encoding.BECH32,  p2wsh_prefix),
+  ('rcat',   1, 32, (False, 'regtest', None, True), Encoding.BECH32M, p2tr_prefix),
+  ('rcat',  16, 40, (False, 'regtest', None, True), Encoding.BECH32M, (OP_16, 40))
 ]
 # templates for invalid bech32 sequences
 bech32_ng_templates = [
@@ -131,7 +172,7 @@ def is_valid(v):
 
 def is_valid_bech32(v):
     '''Check vector v for bech32 validity'''
-    for hrp in ['cat', 'tcat', 'rcat']:
+    for hrp in ['cat', 't1cat', 't2cat', 't3cat', 't4cat', 't5cat', 'rcat']:
         if decode_segwit_address(hrp, v) != (None, None):
             return True
     return False

@@ -755,42 +755,42 @@ BOOST_AUTO_TEST_CASE(util_GetArg)
 BOOST_AUTO_TEST_CASE(util_GetChainName)
 {
     TestArgsManager test_args;
-    const auto testnet = std::make_pair("-testnet", ArgsManager::ALLOW_ANY);
+    const auto testnet = std::make_pair("-testnet1", ArgsManager::ALLOW_ANY);
     const auto regtest = std::make_pair("-regtest", ArgsManager::ALLOW_ANY);
     test_args.SetupArgs({testnet, regtest});
 
-    const char* argv_testnet[] = {"cmd", "-testnet"};
+    const char* argv_testnet[] = {"cmd", "-testnet1"};
     const char* argv_regtest[] = {"cmd", "-regtest"};
-    const char* argv_test_no_reg[] = {"cmd", "-testnet", "-noregtest"};
-    const char* argv_both[] = {"cmd", "-testnet", "-regtest"};
+    const char* argv_test_no_reg[] = {"cmd", "-testnet1", "-noregtest"};
+    const char* argv_both[] = {"cmd", "-testnet1", "-regtest"};
 
     // equivalent to "-testnet"
     // regtest in testnet section is ignored
-    const char* testnetconf = "testnet=1\nregtest=0\n[test]\nregtest=1";
+    const char* testnetconf = "testnet1=1\nregtest=0\n[test]\nregtest=1";
     std::string error;
 
     BOOST_CHECK(test_args.ParseParameters(0, (char**)argv_testnet, error));
     BOOST_CHECK_EQUAL(test_args.GetChainName(), "main");
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_testnet, error));
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_regtest, error));
     BOOST_CHECK_EQUAL(test_args.GetChainName(), "regtest");
 
     BOOST_CHECK(test_args.ParseParameters(3, (char**)argv_test_no_reg, error));
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(3, (char**)argv_both, error));
     BOOST_CHECK_THROW(test_args.GetChainName(), std::runtime_error);
 
     BOOST_CHECK(test_args.ParseParameters(0, (char**)argv_testnet, error));
     test_args.ReadConfigString(testnetconf);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_testnet, error));
     test_args.ReadConfigString(testnetconf);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_regtest, error));
     test_args.ReadConfigString(testnetconf);
@@ -798,7 +798,7 @@ BOOST_AUTO_TEST_CASE(util_GetChainName)
 
     BOOST_CHECK(test_args.ParseParameters(3, (char**)argv_test_no_reg, error));
     test_args.ReadConfigString(testnetconf);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(3, (char**)argv_both, error));
     test_args.ReadConfigString(testnetconf);
@@ -806,15 +806,15 @@ BOOST_AUTO_TEST_CASE(util_GetChainName)
 
     // check setting the network to test (and thus making
     // [test] regtest=1 potentially relevant) doesn't break things
-    test_args.SelectConfigNetwork("test");
+    test_args.SelectConfigNetwork("testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(0, (char**)argv_testnet, error));
     test_args.ReadConfigString(testnetconf);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_testnet, error));
     test_args.ReadConfigString(testnetconf);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_regtest, error));
     test_args.ReadConfigString(testnetconf);
@@ -822,7 +822,7 @@ BOOST_AUTO_TEST_CASE(util_GetChainName)
 
     BOOST_CHECK(test_args.ParseParameters(2, (char**)argv_test_no_reg, error));
     test_args.ReadConfigString(testnetconf);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");
+    BOOST_CHECK_EQUAL(test_args.GetChainName(), "testnet1");
 
     BOOST_CHECK(test_args.ParseParameters(3, (char**)argv_both, error));
     test_args.ReadConfigString(testnetconf);
@@ -870,8 +870,8 @@ struct ArgsMergeTestingSetup : public BasicTestingSetup {
             ForEachNoDup(conf_actions, SET, SECTION_NEGATE, [&] {
                 for (bool soft_set : {false, true}) {
                     for (bool force_set : {false, true}) {
-                        for (const std::string& section : {CBaseChainParams::MAIN, CBaseChainParams::TESTNET, CBaseChainParams::SIGNET}) {
-                            for (const std::string& network : {CBaseChainParams::MAIN, CBaseChainParams::TESTNET, CBaseChainParams::SIGNET}) {
+                        for (const std::string& section : {CBaseChainParams::MAIN, CBaseChainParams::TESTNET1, CBaseChainParams::TESTNET2, CBaseChainParams::TESTNET3, CBaseChainParams::TESTNET4, CBaseChainParams::TESTNET5, CBaseChainParams::SIGNET}) {
+                            for (const std::string& network : {CBaseChainParams::MAIN, CBaseChainParams::TESTNET1, CBaseChainParams::TESTNET2, CBaseChainParams::TESTNET3, CBaseChainParams::TESTNET4, CBaseChainParams::TESTNET5, CBaseChainParams::SIGNET}) {
                                 for (bool net_specific : {false, true}) {
                                     fn(arg_actions, conf_actions, soft_set, force_set, section, network, net_specific);
                                 }
@@ -1025,7 +1025,7 @@ BOOST_FIXTURE_TEST_CASE(util_ArgsMerge, ArgsMergeTestingSetup)
     // Results file is formatted like:
     //
     //   <input> || <IsArgSet/IsArgNegated/GetArg output> | <GetArgs output> | <GetUnsuitable output>
-    BOOST_CHECK_EQUAL(out_sha_hex, "d1e436c1cd510d0ec44d5205d4b4e3bee6387d316e0075c58206cb16603f3d82");
+    BOOST_CHECK_EQUAL(out_sha_hex, "d4de466dd4916e67546ddf948c94dc0e9692a9c551ab47b274f60fdc5bd8c077");
 }
 
 // Similar test as above, but for ArgsManager::GetChainName function.
@@ -1060,11 +1060,11 @@ BOOST_FIXTURE_TEST_CASE(util_ChainMerge, ChainMergeTestingSetup)
         TestArgsManager parser;
         LOCK(parser.cs_args);
         parser.AddArg("-regtest", "regtest", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
-        parser.AddArg("-testnet", "testnet", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
+        parser.AddArg("-testnet1", "testnet1", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
 
-        auto arg = [](Action action) { return action == ENABLE_TEST  ? "-testnet=1"   :
-                                              action == DISABLE_TEST ? "-testnet=0"   :
-                                              action == NEGATE_TEST  ? "-notestnet=1" :
+        auto arg = [](Action action) { return action == ENABLE_TEST  ? "-testnet1=1"   :
+                                              action == DISABLE_TEST ? "-testnet1=0"   :
+                                              action == NEGATE_TEST  ? "-notestnet1=1" :
                                               action == ENABLE_REG   ? "-regtest=1"   :
                                               action == DISABLE_REG  ? "-regtest=0"   :
                                               action == NEGATE_REG   ? "-noregtest=1" : nullptr; };
@@ -1128,7 +1128,7 @@ BOOST_FIXTURE_TEST_CASE(util_ChainMerge, ChainMergeTestingSetup)
     // Results file is formatted like:
     //
     //   <input> || <output>
-    BOOST_CHECK_EQUAL(out_sha_hex, "f263493e300023b6509963887444c41386f44b63bc30047eb8402e8c1144854c");
+    BOOST_CHECK_EQUAL(out_sha_hex, "ef70a3bdaff53f631f38f931000a0d39a0490eb18bf0aca9c4ace5d4bd4ff3d9");
 }
 
 BOOST_AUTO_TEST_CASE(util_ReadWriteSettings)
@@ -2085,7 +2085,7 @@ BOOST_AUTO_TEST_CASE(message_sign)
 {
     const std::array<unsigned char, 32> privkey_bytes = {
         // just some random data
-        // derived address from this private key: LfQxw8EomsJHoL7LTdJoPUYMdpQrHuBAaT
+        // derived address from this private key: 9h7gp9Gsp8h8gVQK3YoSrTYnLf9SmMWKzF
         0x93, 0xEA, 0xDA, 0x22, 0xE7, 0xEB, 0x2C, 0xDD,
         0x17, 0x59, 0x07, 0x03, 0xBB, 0xA9, 0x46, 0xAE,
         0xEA, 0xE0, 0xDE, 0xDF, 0x70, 0x2D, 0xA5, 0x5A,
@@ -2095,7 +2095,7 @@ BOOST_AUTO_TEST_CASE(message_sign)
     const std::string message = "Trust no one";
 
     const std::string expected_signature =
-        "IC5ptVNBb5AbIQAISbQxPem7QY7F/pijKxOUXs8M62GFciVCLvhp9XM/j+3Fu+RKbuEOxtzvUSFcxLnD36FXYfU=";
+        "H1tmTthwmYKH2ncmhhDa65900onI9SSWLFlEba4GGO/3AKHBecyIdW0w3scGwyQpZEVCqbtYpr07f4ujXPcLZLY=";
 
     CKey privkey;
     std::string generated_signature;
@@ -2128,43 +2128,43 @@ BOOST_AUTO_TEST_CASE(message_verify)
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
-            "3B5fQsEXEaV8v6U3ejYc8XaKXAkyQj2MjV",
+            "cgtENA5oJACWkdvFEoC2ksPDSSrqQbeffL",
             "signature should be irrelevant",
             "message too"),
         MessageVerificationResult::ERR_ADDRESS_NO_KEY);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
-            "LVHp936YwkddZXGF41n1H3Jp4QQPyhyKEy",
+            "9h7gp9Gsp8h8gVQK3YoSrTYnLf9SmMWKzF",
             "invalid signature, not in base64 encoding",
             "message should be irrelevant"),
         MessageVerificationResult::ERR_MALFORMED_SIGNATURE);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
-            "LVHp936YwkddZXGF41n1H3Jp4QQPyhyKEy",
+            "9h7gp9Gsp8h8gVQK3YoSrTYnLf9SmMWKzF",
             "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
             "message should be irrelevant"),
         MessageVerificationResult::ERR_PUBKEY_NOT_RECOVERED);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
-            "LZEyQ5Kez1CnmCAehso3wqu2LH6ux251aL",
+            "9h7gp9Gsp8h8gVQK3YoSrTYnLf9SmMWKzF",
             "IC5ptVNBb5AbIQAISbQxPem7QY7F/pijKxOUXs8M62GFciVCLvhp9XM/j+3Fu+RKbuEOxtzvUSFcxLnD36FXYfU=",
             "I never signed this"),
         MessageVerificationResult::ERR_NOT_SIGNED);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
-            "LZEyQ5Kez1CnmCAehso3wqu2LH6ux251aL",
-            "IC5ptVNBb5AbIQAISbQxPem7QY7F/pijKxOUXs8M62GFciVCLvhp9XM/j+3Fu+RKbuEOxtzvUSFcxLnD36FXYfU=",
+            "9h7gp9Gsp8h8gVQK3YoSrTYnLf9SmMWKzF",
+            "H1tmTthwmYKH2ncmhhDa65900onI9SSWLFlEba4GGO/3AKHBecyIdW0w3scGwyQpZEVCqbtYpr07f4ujXPcLZLY=",
             "Trust no one"),
         MessageVerificationResult::OK);
 
     BOOST_CHECK_EQUAL(
         MessageVerify(
-            "LZEyQ5Kez1CnmCAehso3wqu2LH6ux251aL",
-            "IGOL/Q+AYFyofBBNVQlmmU4T/WkPRRCwpRPPKi/pA3QsByrTB3ZfQpDK8QlpUCTCaRLOBxogWrL/4yOxFZU4xiE=",
+            "9h7gp9Gsp8h8gVQK3YoSrTYnLf9SmMWKzF",
+            "INisGde4uTgWsbo1jZeG5Wcky0N1QHa8Uhg7Da0BgneoB/QyfcQ3FxB0jibtHRQAprSk6MxQDJVkhMUMCzYfMkQ=",
             "Trust me"),
         MessageVerificationResult::OK);
 }

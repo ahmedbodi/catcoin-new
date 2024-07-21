@@ -597,8 +597,16 @@ fs::path static StartupShortcutPath()
     std::string chain = gArgs.GetChainName();
     if (chain == CBaseChainParams::MAIN)
         return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin.lnk";
-    if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin (testnet).lnk";
+    if (chain == CBaseChainParams::TESTNET1) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin (testnet1).lnk";
+    if (chain == CBaseChainParams::TESTNET2) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin (testnet2).lnk";
+    if (chain == CBaseChainParams::TESTNET3) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin (testnet3).lnk";
+    if (chain == CBaseChainParams::TESTNET4) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin (testnet4).lnk";
+    if (chain == CBaseChainParams::TESTNET5) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Catcoin (testnet5).lnk";
     return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Catcoin (%s).lnk", chain);
 }
 

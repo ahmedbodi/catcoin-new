@@ -95,13 +95,30 @@ void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
             if (GUIUtil::parseBitcoinURI(arg, &r) && !r.address.isEmpty())
             {
                 auto tempChainParams = CreateChainParams(gArgs, CBaseChainParams::MAIN);
+                auto testnet1ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET1);
+                auto testnet2ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET2);
+                auto testnet3ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET3);
+                auto testnetChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET4);
+                auto testnet1ChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET5);
 
                 if (IsValidDestinationString(r.address.toStdString(), *tempChainParams)) {
                     SelectParams(CBaseChainParams::MAIN);
+                } else if (IsValidDestinationString(r.address.toStdString(), *testnet1ChainParams)) {
+                    tempChainParams = testnet1ChainParams;
+                    SelectParams(CBaseChainParams::TESTNET1);
+                } else if (IsValidDestinationString(r.address.toStdString(), *testnet2ChainParams)) {
+                    tempChainParams = testnet2ChainParams;
+                    SelectParams(CBaseChainParams::TESTNET2);
+                } else if (IsValidDestinationString(r.address.toStdString(), *testnet3ChainParams)) {
+                    tempChainParams = testnet3ChainParams;
+                    SelectParams(CBaseChainParams::TESTNET3);
+                } else if (IsValidDestinationString(r.address.toStdString(), *testnet4ChainParams)) {
+                    tempChainParams = testnet4ChainParams;
+                    SelectParams(CBaseChainParams::TESTNET4);
                 } else {
-                    tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET);
+                    tempChainParams = CreateChainParams(gArgs, CBaseChainParams::TESTNET5);
                     if (IsValidDestinationString(r.address.toStdString(), *tempChainParams)) {
-                        SelectParams(CBaseChainParams::TESTNET);
+                        SelectParams(CBaseChainParams::TESTNET5);
                     }
                 }
             }

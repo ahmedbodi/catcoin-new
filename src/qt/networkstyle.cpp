@@ -18,7 +18,11 @@ static const struct {
     const int iconColorSaturationReduction;
 } network_styles[] = {
     {"main", QAPP_APP_NAME_DEFAULT, 0, 0},
-    {"test", QAPP_APP_NAME_TESTNET, 0, 0},
+    {"testnet1", QAPP_APP_NAME_TESTNET1, 0, 0},
+    {"testnet2", QAPP_APP_NAME_TESTNET2, 0, 0},
+    {"testnet3", QAPP_APP_NAME_TESTNET3, 0, 0},
+    {"testnet4", QAPP_APP_NAME_TESTNET4, 0, 0},
+    {"testnet5", QAPP_APP_NAME_TESTNET5, 0, 0},
     {"signet", QAPP_APP_NAME_SIGNET, 35, 15},
     {"regtest", QAPP_APP_NAME_REGTEST, 60, 1},
 };

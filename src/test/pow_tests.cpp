@@ -128,9 +128,29 @@ BOOST_AUTO_TEST_CASE(ChainParams_REGTEST_sanity)
     sanity_check_chainparams(*m_node.args, CBaseChainParams::REGTEST);
 }
 
-BOOST_AUTO_TEST_CASE(ChainParams_TESTNET_sanity)
+BOOST_AUTO_TEST_CASE(ChainParams_TESTNET1_sanity)
 {
-    sanity_check_chainparams(*m_node.args, CBaseChainParams::TESTNET);
+    sanity_check_chainparams(*m_node.args, CBaseChainParams::TESTNET1);
+}
+
+BOOST_AUTO_TEST_CASE(ChainParams_TESTNET2_sanity)
+{
+    sanity_check_chainparams(*m_node.args, CBaseChainParams::TESTNET2);
+}
+
+BOOST_AUTO_TEST_CASE(ChainParams_TESTNET3_sanity)
+{
+    sanity_check_chainparams(*m_node.args, CBaseChainParams::TESTNET3);
+}
+
+BOOST_AUTO_TEST_CASE(ChainParams_TESTNET4_sanity)
+{
+    sanity_check_chainparams(*m_node.args, CBaseChainParams::TESTNET4);
+}
+
+BOOST_AUTO_TEST_CASE(ChainParams_TESTNET5_sanity)
+{
+    sanity_check_chainparams(*m_node.args, CBaseChainParams::TESTNET5);
 }
 
 BOOST_AUTO_TEST_CASE(ChainParams_SIGNET_sanity)
