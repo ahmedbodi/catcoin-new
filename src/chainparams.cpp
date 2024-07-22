@@ -113,7 +113,7 @@ public:
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        nDefaultPort = 9932; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/protocol.h#L21
+        nDefaultPort = 9933; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/protocol.h#L21
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 40;
         m_assumed_chain_state_size = 2;
@@ -261,7 +261,7 @@ public:
         pchMessageStart[1] = 0xcb;
         pchMessageStart[2] = 0xb8;
         pchMessageStart[3] = 0xdd;
-        nDefaultPort = 19932;
+        nDefaultPort = 19933;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
@@ -365,7 +365,7 @@ public:
         pchMessageStart[1] = 0xcc;
         pchMessageStart[2] = 0xb9;
         pchMessageStart[3] = 0xde;
-        nDefaultPort = 18932;
+        nDefaultPort = 18933;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
@@ -469,7 +469,7 @@ public:
         pchMessageStart[1] = 0xcd;
         pchMessageStart[2] = 0xc0;
         pchMessageStart[3] = 0xdf;
-        nDefaultPort = 17932;
+        nDefaultPort = 17933;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
@@ -573,7 +573,7 @@ public:
         pchMessageStart[1] = 0xce;
         pchMessageStart[2] = 0xc1;
         pchMessageStart[3] = 0xd0;
-        nDefaultPort = 16932;
+        nDefaultPort = 16933;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
@@ -677,7 +677,7 @@ public:
         pchMessageStart[1] = 0xcf;
         pchMessageStart[2] = 0xc2;
         pchMessageStart[3] = 0xd1;
-        nDefaultPort = 15932;
+        nDefaultPort = 15933;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
@@ -776,7 +776,7 @@ public:
         pchMessageStart[1] = 0xbf;
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
-        nDefaultPort = 19444;
+        nDefaultPort = 19433;
         nPruneAfterHeight = 1000;
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
