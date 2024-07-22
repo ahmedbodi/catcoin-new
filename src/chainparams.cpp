@@ -115,8 +115,8 @@ public:
         pchMessageStart[3] = 0xdc;
         nDefaultPort = 9933; // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/protocol.h#L21
         nPruneAfterHeight = 100000;
-        m_assumed_blockchain_size = 40;
-        m_assumed_chain_state_size = 2;
+        m_assumed_blockchain_size = 1;
+        m_assumed_chain_state_size = 1;
 
         genesis = CreateGenesisBlock(1387838302, 588050, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
         consensus.hashGenesisBlock = genesis.GetHash();
@@ -198,9 +198,9 @@ public:
         // https://github.com/CatcoinOfficial/CatcoinRelease/blob/master/src/checkpoints.cpp#L83
         chainTxData = ChainTxData{
             // Data from rpc: getchaintxstats 4096 62e2e3d21343a00994d38a63524867507dbeee6850e8fbf02e9c47a3ccf82f24
-            /* nTime    */ 1502242527,
-            /* nTxCount */ 245139,
-            /* dTxRate  */ 200,
+            /* nTime    */ 1721605648,
+            /* nTxCount */ 541203,
+            /* dTxRate  */ 0.001525724006013679,
         };
     }
 };
