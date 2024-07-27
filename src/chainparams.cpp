@@ -83,6 +83,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nLwmaAveragingWindow = 45;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 7500; // 75% of 10000
@@ -232,6 +234,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
+        consensus.nLwmaAveragingWindow = 45;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 7500; // 75% of 10000
@@ -336,6 +340,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
+        consensus.nLwmaAveragingWindow = 45;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 7500; // 75% of 10000
@@ -440,6 +446,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
+        consensus.nLwmaAveragingWindow = 45;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 7500; // 75% of 10000
@@ -544,6 +552,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
+        consensus.nLwmaAveragingWindow = 45;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 7500; // 75% of 10000
@@ -648,6 +658,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
+        consensus.nLwmaAveragingWindow = 45;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 7500; // 75% of 10000
@@ -752,6 +764,8 @@ public:
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
         consensus.nPowTargetTimespanV2 = 6 * 60 * 60;
         consensus.nPowTargetSpacing = 10 * 60;
+        consensus.nPowTargetSpacingMax = 12 * consensus.nPowTargetSpacing;
+        consensus.nLwmaAveragingWindow = 45;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains

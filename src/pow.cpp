@@ -10,7 +10,14 @@
 #include <chain.h>
 #include <logging.h>
 #include <primitives/block.h>
+#include <pow/dgw.h>
+#include <pow/digishield.h>
+#include <pow/kgw.h>
+#include <pow/lwma.h>
+#include <pow/peercoin.h>
+#include <pow/pid1238.h>
 #include <uint256.h>
+#include "chainparams.h"
 
 unsigned int GetNextWorkRequired_CIP01(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
@@ -313,6 +320,65 @@ unsigned int GetNextWorkRequired_CIP05(const CBlockIndex* pindexLast, const CBlo
     return GetNextWorkRequired_CIP04(pindexLast, pblock, params);
 }
 
+unsigned int GetNextWorkRequired_CIP06(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    int64_t timestamp = (pindexLast->GetBlockTime() % 60); // Get the seconds portion of the last block
+    if ((timestamp >= 0 && timestamp <= 14) || (timestamp >= 30 && timestamp <= 44)) {
+        return GetNextWorkRequired_DigiShield(pindexLast, pblock, params);
+    }
+    return GetNextWorkRequired_PID1238(pindexLast, pblock, params);
+}
+
+unsigned int GetNextWorkRequired_CIP07(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    return GetNextWorkRequired_PID1238(pindexLast, pblock, params);
+}
+
+unsigned int GetNextWorkRequired_CIP08(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    return GetNextWorkRequired_DGW(pindexLast, pblock, params);
+}
+
+unsigned int GetNextWorkRequired_CIP09(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    auto pid1238 = GetNextWorkRequired_PID1238(pindexLast, pblock, params);
+    auto digishield = GetNextWorkRequired_DigiShield(pindexLast, pblock, params);
+    auto lwma = GetNextWorkRequired_LWMA(pindexLast, pblock, params);
+    auto dgw = GetNextWorkRequired_DGW(pindexLast, pblock, params);
+    auto peercoin = GetNextWorkRequired_Peercoin(pindexLast, pblock, params);
+
+    // Add Results to list and sort top to bottom and bin the top 2
+    std::list<unsigned int> results = {pid1238, digishield, lwma, dgw, peercoin};
+    results.sort();
+
+    // Remove front and back
+    results.pop_front();
+    results.pop_back();
+
+    auto total = accumulate(results.begin(), results.end(), (unsigned int) 0.0);
+    return total / results.size();
+}
+
+unsigned int GetNextWorkRequired_CIP10(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
+{
+    auto pid1238 = GetNextWorkRequired_PID1238(pindexLast, pblock, params);
+    auto kgw = GetNextWorkRequired_KGW(pindexLast, pblock, params);
+    auto lwma = GetNextWorkRequired_LWMA(pindexLast, pblock, params);
+    auto dgw = GetNextWorkRequired_DGW(pindexLast, pblock, params);
+    auto peercoin = GetNextWorkRequired_Peercoin(pindexLast, pblock, params);
+
+    // Add Results to list and sort top to bottom and bin the top 2
+    std::list<unsigned int> results = {pid1238, kgw, lwma, dgw, peercoin};
+    results.sort();
+
+    // Remove front and back
+    results.pop_front();
+    results.pop_back();
+
+    auto total = accumulate(results.begin(), results.end(), (unsigned int) 0.0);
+    return total / results.size();
+}
+
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
     assert(pindexLast != nullptr);
@@ -360,6 +426,18 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     if (pindexLast->nHeight < params.CIP04Height)
         return GetNextWorkRequired_CIP04(pindexLast, pblock, params);
 
+    auto network = Params().NetworkIDString();
+    if (network == CBaseChainParams::TESTNET1) {
+        return GetNextWorkRequired_CIP06(pindexLast, pblock, params);
+    } else if (network == CBaseChainParams::TESTNET2) {
+        return GetNextWorkRequired_CIP07(pindexLast, pblock, params);
+    } else if (network == CBaseChainParams::TESTNET3) {
+        return GetNextWorkRequired_CIP08(pindexLast, pblock, params);
+    } else if (network == CBaseChainParams::TESTNET4) {
+        return GetNextWorkRequired_CIP09(pindexLast, pblock, params);
+    } else if (network == CBaseChainParams::TESTNET5) {
+        return GetNextWorkRequired_CIP10(pindexLast, pblock, params);
+    }
     return GetNextWorkRequired_CIP05(pindexLast, pblock, params);
 }
 

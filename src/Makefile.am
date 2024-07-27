@@ -343,6 +343,12 @@ BITCOIN_CORE_H = \
   policy/policy.h \
   policy/rbf.h \
   policy/settings.h \
+  pow/dgw.h \
+  pow/digishield.h \
+  pow/kgw.h \
+  pow/lwma.h \
+  pow/peercoin.h \
+  pow/pid1238.h \
   pow.h \
   protocol.h \
   psbt.h \
@@ -486,6 +492,12 @@ libbitcoin_server_a_SOURCES = \
   policy/fees.cpp \
   policy/rbf.cpp \
   policy/settings.cpp \
+  pow/dgw.cpp \
+  pow/digishield.cpp \
+  pow/kgw.cpp \
+  pow/lwma.cpp \
+  pow/peercoin.cpp \
+  pow/pid1238.cpp \
   pow.cpp \
   rest.cpp \
   rpc/blockchain.cpp \
