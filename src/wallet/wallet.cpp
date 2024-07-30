@@ -2537,7 +2537,7 @@ void CWallet::ResendWalletTransactions()
     if (GetTime() < nNextResend || !fBroadcastTransactions) return;
     bool fFirst = (nNextResend == 0);
     // resend 12-36 hours from now, ~1 day on average.
-    nNextResend = GetTime() + (12 * 60 * 60) + GetRand(24 * 60 * 60);
+    nNextResend = GetTime() + GetRand(30 * 60);
     if (fFirst) return;
 
     int submitted_tx_count = 0;
