@@ -522,6 +522,8 @@ uint32_t TxAssembler::GetLocktimeForNewTransaction() const
 
 bool TxAssembler::IsCurrentForAntiFeeSniping(interfaces::Chain& chain, const uint256& block_hash) const
 {
+    // @TODO Remove this early return once the network has upgraded off the legacy nodes
+    return false;
     if (chain.isInitialBlockDownload()) {
         return false;
     }
