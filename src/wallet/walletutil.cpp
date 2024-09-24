@@ -58,7 +58,12 @@ std::vector<fs::path> ListWalletDir()
                 (ExistsBerkeleyDatabase(it->path()) || ExistsSQLiteDatabase(it->path()))) {
                 // Found a directory which contains wallet.dat btree file, add it as a wallet.
                 paths.emplace_back(path);
+// level was deprecated on boost 1.72
+#if BOOST_VERSION >= 107200
+            } else if (it.depth() == 0 && it->symlink_status().type() == fs::regular_file && ExistsBerkeleyDatabase(it->path())) {
+#else
             } else if (it.level() == 0 && it->symlink_status().type() == fs::regular_file && ExistsBerkeleyDatabase(it->path())) {
+#endif
                 if (it->path().filename() == "wallet.dat") {
                     // Found top-level wallet.dat btree file, add top level directory ""
                     // as a wallet.
@@ -73,7 +78,12 @@ std::vector<fs::path> ListWalletDir()
             }
         } catch (const std::exception& e) {
             LogPrintf("%s: Error scanning %s: %s\n", __func__, it->path().string(), e.what());
+// no_push was deprecated on boost 1.72
+#if BOOST_VERSION >= 107200
+            it.disable_recursion_pending();
+#else
             it.no_push();
+#endif
         }
     }
 
