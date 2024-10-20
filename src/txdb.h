@@ -10,6 +10,7 @@
 #include <dbwrapper.h>
 #include <chain.h>
 #include <mw/node/CoinsView.h>
+#include <primitives/pureheader.h>
 #include <primitives/block.h>
 
 #include <memory>

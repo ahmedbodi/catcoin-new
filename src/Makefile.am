@@ -264,6 +264,8 @@ BITCOIN_CORE_H = \
   addrdb.h \
   addrman.h \
   attributes.h \
+  auxpow.h \
+  auxpow_miner.h \
   banman.h \
   base58.h \
   bech32.h \
@@ -288,7 +290,7 @@ BITCOIN_CORE_H = \
   consensus/consensus.h \
   consensus/tx_check.h \
   consensus/tx_verify.h \
-	libmw/include/mw/crypto/Hasher.h \
+  libmw/include/mw/crypto/Hasher.h \
   core_io.h \
   core_memusage.h \
   cuckoocache.h \
@@ -355,10 +357,12 @@ BITCOIN_CORE_H = \
   random.h \
   randomenv.h \
   reverse_iterator.h \
+  rpc/auxpow_miner.h \
   rpc/blockchain.h \
   rpc/client.h \
   rpc/mining.h \
   rpc/protocol.h \
+  rpc/rawtransaction.h \
   rpc/rawtransaction_util.h \
   rpc/register.h \
   rpc/request.h \
@@ -432,8 +436,8 @@ BITCOIN_CORE_H = \
   wallet/scriptpubkeyman.h \
   wallet/sqlite.h \
   wallet/txassembler.h \
-	wallet/txrecord.h \
-	wallet/txlist.h \
+  wallet/txrecord.h \
+  wallet/txlist.h \
   wallet/wallet.h \
   wallet/walletdb.h \
   wallet/wallettool.h \
@@ -500,6 +504,7 @@ libbitcoin_server_a_SOURCES = \
   pow/pid1238.cpp \
   pow.cpp \
   rest.cpp \
+  rpc/auxpow_miner.cpp \
   rpc/blockchain.cpp \
   rpc/mining.cpp \
   rpc/misc.cpp \
@@ -654,6 +659,8 @@ libbitcoin_consensus_a_SOURCES = \
   prevector.h \
   primitives/block.cpp \
   primitives/block.h \
+  primitives/pureheader.cpp \
+  primitives/pureheader.h \
   primitives/transaction.cpp \
   primitives/transaction.h \
   pubkey.cpp \
@@ -678,6 +685,7 @@ libbitcoin_consensus_a_SOURCES = \
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
+  auxpow.cpp \
   base58.cpp \
   bech32.cpp \
   bloom.cpp \
@@ -780,7 +788,9 @@ catcoin_daemon_sources += bitcoind-res.rc
 endif
 
 catcoin_bin_ldadd = \
+  $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
+  $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
   $(LIBUNIVALUE) \

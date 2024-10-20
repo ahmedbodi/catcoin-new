@@ -8,6 +8,7 @@
 #include <chain.h>
 #include <consensus/validation.h>
 #include <logging.h>
+#include <primitives/pureheader.h>
 #include <primitives/block.h>
 #include <primitives/transaction.h>
 #include <scheduler.h>

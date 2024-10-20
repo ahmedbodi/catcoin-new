@@ -106,6 +106,12 @@ public:
         consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000004853b14a65c5bb6c"); // getblockchaininfo chainwork field @ Block 369630
         consensus.defaultAssumeValid = uint256S("0x09446a44415b5c411795b963e1db3558b571eaa82b961f27d9645c99999c0d38"); // Block 369630
 
+        consensus.nAuxpowChainId = 0x0001;
+        consensus.fAuxpowEnabled = false;
+        consensus.nAuxpowStartHeight = -1;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
+
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -257,6 +263,12 @@ public:
         consensus.nMinimumChainWork = uint256S("0x0");
         consensus.defaultAssumeValid = uint256S("0x0");
 
+        consensus.nAuxpowChainId = 0xca1;
+        consensus.fAuxpowEnabled = true;
+        consensus.nAuxpowStartHeight = 0;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
+
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -362,6 +374,12 @@ public:
 
         consensus.nMinimumChainWork = uint256S("0x0");
         consensus.defaultAssumeValid = uint256S("0x0");
+
+        consensus.nAuxpowChainId = 0xca2;
+        consensus.fAuxpowEnabled = true;
+        consensus.nAuxpowStartHeight = 0;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -469,6 +487,12 @@ public:
         consensus.nMinimumChainWork = uint256S("0x0");
         consensus.defaultAssumeValid = uint256S("0x0");
 
+        consensus.nAuxpowChainId = 0xca3;
+        consensus.fAuxpowEnabled = true;
+        consensus.nAuxpowStartHeight = 0;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
+
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -574,6 +598,12 @@ public:
 
         consensus.nMinimumChainWork = uint256S("0x0");
         consensus.defaultAssumeValid = uint256S("0x0");
+
+        consensus.nAuxpowChainId = 0xca4;
+        consensus.fAuxpowEnabled = true;
+        consensus.nAuxpowStartHeight = 0;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -681,6 +711,12 @@ public:
         consensus.nMinimumChainWork = uint256S("0x0");
         consensus.defaultAssumeValid = uint256S("0x0");
 
+        consensus.nAuxpowChainId = 0xca5;
+        consensus.fAuxpowEnabled = true;
+        consensus.nAuxpowStartHeight = 0;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
+
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -786,6 +822,12 @@ public:
 
         consensus.nMinimumChainWork = uint256{};
         consensus.defaultAssumeValid = uint256{};
+
+        consensus.nAuxpowChainId = 0xca6;
+        consensus.fAuxpowEnabled = true;
+        consensus.nAuxpowStartHeight = 0;
+        consensus.fStrictChainId = true;
+        consensus.nLegacyBlocksBefore = -1;
 
         pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xbf;

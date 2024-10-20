@@ -25,6 +25,7 @@
 #include <wallet/scriptpubkeyman.h>
 #include <wallet/walletdb.h>
 #include <wallet/walletutil.h>
+#include <wallet/reserve.h>
 
 #include <algorithm>
 #include <atomic>
