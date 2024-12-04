@@ -227,8 +227,8 @@ public:
         consensus.SegwitHeight = INT_MAX;
         consensus.CIP01Height = 1;
         consensus.CIP02Height = 2;
-        consensus.CIP03Height = 3;
-        consensus.CIP04Height = 4;
+        consensus.CIP03Height = 4;
+        consensus.CIP04Height = 8;
         consensus.MinBIP9WarningHeight = 46000; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
@@ -331,10 +331,10 @@ public:
         consensus.BIP66Height = INT_MAX;
         consensus.CSVHeight = INT_MAX;
         consensus.SegwitHeight = INT_MAX;
-        consensus.CIP01Height = 0;
-        consensus.CIP02Height = 0;
-        consensus.CIP03Height = 0;
-        consensus.CIP04Height = 0;
+        consensus.CIP01Height = 1;
+        consensus.CIP02Height = 2;
+        consensus.CIP03Height = 4;
+        consensus.CIP04Height = 8;
         consensus.MinBIP9WarningHeight = 46000; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
@@ -402,8 +402,8 @@ public:
         vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
 
         fDefaultConsistencyChecks = false;
-        fRequireStandard = false;
-        m_is_test_chain = true;
+        fRequireStandard = true;
+        m_is_test_chain = false;
         m_is_mockable_chain = false;
 
         checkpointData = {
@@ -437,10 +437,10 @@ public:
         consensus.BIP66Height = INT_MAX;
         consensus.CSVHeight = INT_MAX;
         consensus.SegwitHeight = INT_MAX;
-        consensus.CIP01Height = 0;
-        consensus.CIP02Height = 0;
-        consensus.CIP03Height = 0;
-        consensus.CIP04Height = 0;
+        consensus.CIP01Height = 1;
+        consensus.CIP02Height = 2;
+        consensus.CIP03Height = 4;
+        consensus.CIP04Height = 8;
         consensus.MinBIP9WarningHeight = 46000; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
@@ -508,8 +508,8 @@ public:
         vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
 
         fDefaultConsistencyChecks = false;
-        fRequireStandard = false;
-        m_is_test_chain = true;
+        fRequireStandard = true;
+        m_is_test_chain = false;
         m_is_mockable_chain = false;
 
         checkpointData = {
@@ -543,10 +543,10 @@ public:
         consensus.BIP66Height = INT_MAX;
         consensus.CSVHeight = INT_MAX;
         consensus.SegwitHeight = INT_MAX;
-        consensus.CIP01Height = 0;
-        consensus.CIP02Height = 0;
-        consensus.CIP03Height = 0;
-        consensus.CIP04Height = 0;
+        consensus.CIP01Height = 1;
+        consensus.CIP02Height = 2;
+        consensus.CIP03Height = 4;
+        consensus.CIP04Height = 8;
         consensus.MinBIP9WarningHeight = 46000; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
@@ -614,8 +614,8 @@ public:
         vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
 
         fDefaultConsistencyChecks = false;
-        fRequireStandard = false;
-        m_is_test_chain = true;
+        fRequireStandard = true;
+        m_is_test_chain = false;
         m_is_mockable_chain = false;
 
         checkpointData = {
@@ -649,10 +649,10 @@ public:
         consensus.BIP66Height = INT_MAX;
         consensus.CSVHeight = INT_MAX;
         consensus.SegwitHeight = INT_MAX;
-        consensus.CIP01Height = 0;
-        consensus.CIP02Height = 0;
-        consensus.CIP03Height = 0;
-        consensus.CIP04Height = 0;
+        consensus.CIP01Height = 1;
+        consensus.CIP02Height = 2;
+        consensus.CIP03Height = 4;
+        consensus.CIP04Height = 8;
         consensus.MinBIP9WarningHeight = 46000; // segwit activation height + miner confirmation window
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespanV1 = 14 * 24 * 60 * 60;
@@ -720,8 +720,8 @@ public:
         vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
 
         fDefaultConsistencyChecks = false;
-        fRequireStandard = false;
-        m_is_test_chain = true;
+        fRequireStandard = true;
+        m_is_test_chain = false;
         m_is_mockable_chain = false;
 
         checkpointData = {
