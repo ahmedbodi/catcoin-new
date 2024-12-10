@@ -23,7 +23,7 @@ AC_DEFUN([BITCOIN_FIND_BDB48],[
         #include <${searchpath}db_cxx.h>
       ]],[[
         #if !((DB_VERSION_MAJOR == 6 && DB_VERSION_MINOR >= 2) || DB_VERSION_MAJOR > 6)
-          #error "failed to find bdb 4.8+"
+          #error "failed to find bdb 6.2+"
         #endif
       ]])],[
         if test "x$bdbpath" = "xX"; then
