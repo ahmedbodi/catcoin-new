@@ -377,9 +377,9 @@ public:
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1721262997, 667760, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
+        genesis = CreateGenesisBlock(1387838303, 608937, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000011bb69bfa560cebf9e54cccbe4076ae7803a83c036445680bca49c3af2a"));
+        assert(consensus.hashGenesisBlock == uint256S("0xec7987a2ab5225246c5cf9b8d93b4b75bcef383a4a65d5a265bc09ed54006188")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
         assert(genesis.hashMerkleRoot == uint256S("0x4007a33db5d9cdf2aab117335eb8431c8d13fb86e0214031fdaebe69a0f29cf7"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
@@ -483,9 +483,9 @@ public:
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1721263433, 157410, 0x1e0ffff0, 1, 50 * COIN); 
+        genesis = CreateGenesisBlock(1387838303, 608937, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000ec98e743f9c93e45eed9487e553f1f246a588dad3225404c517514d6142")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
+        assert(consensus.hashGenesisBlock == uint256S("0xec7987a2ab5225246c5cf9b8d93b4b75bcef383a4a65d5a265bc09ed54006188")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
         assert(genesis.hashMerkleRoot == uint256S("0x4007a33db5d9cdf2aab117335eb8431c8d13fb86e0214031fdaebe69a0f29cf7"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
@@ -589,9 +589,9 @@ public:
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1721264103, 686554, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1387838303, 608937, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000003557208fb8f1aa0c9355a8a9a29bb096a65af3eee9948f4ebef4e65cfb9"));
+        assert(consensus.hashGenesisBlock == uint256S("0xec7987a2ab5225246c5cf9b8d93b4b75bcef383a4a65d5a265bc09ed54006188")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
         assert(genesis.hashMerkleRoot == uint256S("0x4007a33db5d9cdf2aab117335eb8431c8d13fb86e0214031fdaebe69a0f29cf7"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
@@ -695,9 +695,9 @@ public:
         m_assumed_blockchain_size = 0;
         m_assumed_chain_state_size = 0;
 
-        genesis = CreateGenesisBlock(1721264103, 686554, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
+        genesis = CreateGenesisBlock(1387838303, 608937, 0x1e0ffff0, 1, 50 * COIN); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L3022
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000003557208fb8f1aa0c9355a8a9a29bb096a65af3eee9948f4ebef4e65cfb9")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
+        assert(consensus.hashGenesisBlock == uint256S("0xec7987a2ab5225246c5cf9b8d93b4b75bcef383a4a65d5a265bc09ed54006188")); // https://github.com/CatcoinOfficial/CatcoinRelease/blob/c69cc7050a6a1e1e6aa8c34bac2c1f8dad0037a1/src/main.cpp#L35C27-L35C93
         assert(genesis.hashMerkleRoot == uint256S("0x4007a33db5d9cdf2aab117335eb8431c8d13fb86e0214031fdaebe69a0f29cf7"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
