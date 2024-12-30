@@ -22,6 +22,7 @@ unsigned int GetNextWorkRequired_DigiShield(const CBlockIndex* pindexLast, const
     int64_t nActualTimespan = pindexLast->GetBlockTime() - pindexPrev->GetBlockTime();
 
     // limit difficulty changes between 50% and 125% (human view)
+    nActualTimespan = params.nPowTargetTimespanV2 + (nActualTimespan - params.nPowTargetTimespanV2)/8;
     if (nActualTimespan < (params.nPowTargetSpacing - (params.nPowTargetSpacing / 4))) nActualTimespan = (params.nPowTargetSpacing - (params.nPowTargetSpacing / 4));
     if (nActualTimespan > (params.nPowTargetSpacing + (params.nPowTargetSpacing / 2))) nActualTimespan = (params.nPowTargetSpacing + (params.nPowTargetSpacing / 2));
 
@@ -29,7 +30,7 @@ unsigned int GetNextWorkRequired_DigiShield(const CBlockIndex* pindexLast, const
     CBigNum bnNew;
     bnNew.SetCompact(pindexLast->nBits);
     bnNew *= nActualTimespan;
-    bnNew /= params.nPowTargetSpacing;
+    bnNew /= params.nPowTargetTimespanV2;
 
     // difficulty should never go below (human view) the starting difficulty
     if (bnNew > bnProofOfWorkLimit) {

@@ -96,7 +96,7 @@ unsigned int GetNextWorkRequired_PID1238(const CBlockIndex* pindexLast, const CB
 	if(std::abs(error2) < std::abs(error)) error = error2;
 	if(std::abs(error1) < std::abs(error)) error = error1;
 
-    if (error >= -450 && error <= 450)
+    if (error >= -250 && error <= 250)
     {
         pCalc = pGainUp * (double)error;
         iCalc = iGainUp * (double)error * (double)((double)params.nPowTargetSpacing / (double)nActualTimespan);
