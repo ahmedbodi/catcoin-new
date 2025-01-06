@@ -16,6 +16,7 @@
 #include <pow/lwma.h>
 #include <pow/peercoin.h>
 #include <pow/pid1238.h>
+#include <pow/agw.h>
 #include <uint256.h>
 #include "chainparams.h"
 
@@ -322,16 +323,12 @@ unsigned int GetNextWorkRequired_CIP05(const CBlockIndex* pindexLast, const CBlo
 
 unsigned int GetNextWorkRequired_CIP06(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
-    int64_t timestamp = (pindexLast->GetBlockTime() % 60); // Get the seconds portion of the last block
-    if ((timestamp >= 0 && timestamp <= 14) || (timestamp >= 30 && timestamp <= 44)) {
-        return GetNextWorkRequired_DigiShield(pindexLast, pblock, params);
-    }
     return GetNextWorkRequired_PID1238(pindexLast, pblock, params);
 }
 
 unsigned int GetNextWorkRequired_CIP07(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
-    return GetNextWorkRequired_PID1238(pindexLast, pblock, params);
+    return GetNextWorkRequired_LWMA(pindexLast, pblock, params);
 }
 
 unsigned int GetNextWorkRequired_CIP08(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
@@ -341,42 +338,12 @@ unsigned int GetNextWorkRequired_CIP08(const CBlockIndex* pindexLast, const CBlo
 
 unsigned int GetNextWorkRequired_CIP09(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
-    auto pid1238 = GetNextWorkRequired_PID1238(pindexLast, pblock, params);
-    auto digishield = GetNextWorkRequired_DigiShield(pindexLast, pblock, params);
-    auto lwma = GetNextWorkRequired_LWMA(pindexLast, pblock, params);
-    auto dgw = GetNextWorkRequired_DGW(pindexLast, pblock, params);
-    auto peercoin = GetNextWorkRequired_Peercoin(pindexLast, pblock, params);
-
-    // Add Results to list and sort top to bottom and bin the top 2
-    std::list<unsigned int> results = {pid1238, digishield, lwma, dgw, peercoin};
-    results.sort();
-
-    // Remove front and back
-    results.pop_front();
-    results.pop_back();
-
-    auto total = accumulate(results.begin(), results.end(), (unsigned int) 0.0);
-    return total / results.size();
+    return GetNextWorkRequired_AGW(pindexLast, pblock, params);
 }
 
 unsigned int GetNextWorkRequired_CIP10(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)
 {
-    auto pid1238 = GetNextWorkRequired_PID1238(pindexLast, pblock, params);
-    auto kgw = GetNextWorkRequired_KGW(pindexLast, pblock, params);
-    auto lwma = GetNextWorkRequired_LWMA(pindexLast, pblock, params);
-    auto dgw = GetNextWorkRequired_DGW(pindexLast, pblock, params);
-    auto peercoin = GetNextWorkRequired_Peercoin(pindexLast, pblock, params);
-
-    // Add Results to list and sort top to bottom and bin the top 2
-    std::list<unsigned int> results = {pid1238, kgw, lwma, dgw, peercoin};
-    results.sort();
-
-    // Remove front and back
-    results.pop_front();
-    results.pop_back();
-
-    auto total = accumulate(results.begin(), results.end(), (unsigned int) 0.0);
-    return total / results.size();
+    return GetNextWorkRequired_Peercoin(pindexLast, pblock, params);
 }
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock, const Consensus::Params& params)

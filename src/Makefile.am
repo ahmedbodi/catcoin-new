@@ -349,6 +349,7 @@ BITCOIN_CORE_H = \
   pow/lwma.h \
   pow/peercoin.h \
   pow/pid1238.h \
+  pow/agw.h \
   pow.h \
   protocol.h \
   psbt.h \
@@ -498,6 +499,7 @@ libbitcoin_server_a_SOURCES = \
   pow/lwma.cpp \
   pow/peercoin.cpp \
   pow/pid1238.cpp \
+  pow/agw.cpp \
   pow.cpp \
   rest.cpp \
   rpc/blockchain.cpp \
