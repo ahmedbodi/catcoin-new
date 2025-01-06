@@ -262,7 +262,7 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfc;
+        pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xcb;
         pchMessageStart[2] = 0xb8;
         pchMessageStart[3] = 0xdd;
@@ -368,7 +368,7 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfc;
+        pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xcc;
         pchMessageStart[2] = 0xb9;
         pchMessageStart[3] = 0xde;
@@ -474,7 +474,7 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfc;
+        pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xcd;
         pchMessageStart[2] = 0xc0;
         pchMessageStart[3] = 0xdf;
@@ -580,7 +580,7 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfc;
+        pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xce;
         pchMessageStart[2] = 0xc1;
         pchMessageStart[3] = 0xd0;
@@ -686,7 +686,7 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xfc;
+        pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xcf;
         pchMessageStart[2] = 0xc2;
         pchMessageStart[3] = 0xd1;
