@@ -30,6 +30,8 @@ The `master` branch is regularly built (see `doc/build-*.md` for instructions) a
 completely stable. [Tags](https://github.com/catcoin-project/catcoin/tags) are created
 regularly from release branches to indicate new official, stable release versions of Catcoin Core.
 
+This project requires BDB 6 for builds rather than the usual BDB4.8 Which many coins use. To get started, a script has been provided in `contrib/install_db6.sh`
+
 The https://github.com/catcoin-project/gui repository is used exclusively for the
 development of the GUI. Its master branch is identical in all monotree
 repositories. Release branches and tags do not exist, so please do not fork
